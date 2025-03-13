@@ -78,6 +78,31 @@ class DataValidator:
         no_alarm_values = {"reserved", "gereserveerd", "spare", ""} # config
         
         return value.lower() not in no_alarm_values # True if alarm exists
+    
+    def file_type(self, sheetname, columnname, alarm_column_name="Alarmtext machine constructor (German)", file_extension=".pdl"):
+        """ Controleert of waarden in een bepaalde kolom eindigen op een correct bestandstype. """
+        if sheetname not in self.dataframes:
+            print(f"Waarschuwing: Sheet '{sheetname}' niet gevonden.")
+            return
+        
+        df = self.dataframes[sheetname]
+        
+        if columnname not in df.columns:
+            print(f"Waarschuwing: Kolom '{columnname}' niet gevonden in '{sheetname}'.")
+            return
+        
+        if alarm_column_name not in df.columns:
+            print(f"Waarschuwing: Alarm-kolom '{alarm_column_name}' niet gevonden in '{sheetname}'.") # controle op bestaan van alarm kan niet worden uitgevoerd
+            return
+
+        # Controle per rij
+        for index, row in df.iterrows():
+            if self.alarm_exists(row, alarm_column_name):  # Controle: alleen als alarm bestaat
+                cell_value = str(row[columnname]).strip() if pd.notna(row[columnname]) else ""
+                
+                if not cell_value.endswith(file_extension):
+                    error_msg = f"Rij {index+4}: '{cell_value}' is geen geldig {file_extension}-bestand."
+                    self.errors.append((sheetname, columnname, index+4, error_msg))
                 
     def log_errors(self, logfile="error_log.txt"): # variabele naam van maken, afh van Excel file
         if not self.errors:
@@ -128,4 +153,7 @@ validator = DataValidator(processor.dataframes)
 
 validator.max_characters("Alarmlist", "Alarmtext English", 75)
 validator.max_characters("Alarmlist", "Dutch translation", 75)
+
+validator.file_type("Alarmlist", "Picture", "Alarmtext machine constructor (German)", ".pdl")
+
 validator.log_errors()
