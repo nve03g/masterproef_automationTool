@@ -63,9 +63,11 @@ class DataValidator:
         
         # perform check
         for index, value in df[columnname].dropna().items():
+            # print((index, value))
             if isinstance(value, str) and len (value) > max_chars:
-                error_msg = f"Rij {index+1}: '{value}' is te lang ({len(value)} > {max_chars})"
-                self.errors.append((sheetname, columnname, index+1, error_msg))
+                error_msg = f"Rij {index+4}: '{value}' is te lang ({len(value)} > {max_chars})"
+                self.errors.append((sheetname, columnname, index+4, error_msg))
+    
                 
     def log_errors(self, logfile="error_log.txt"): # variabele naam van maken, afh van Excel file
         if not self.errors:
@@ -93,16 +95,23 @@ header_rows = { # ingeven via config
     "Color Pictures": 3,
 }
 column_names = { # ingeven via config
-    "Alarmlist": ['CRF / PCN', 'Version', 'PfizerNR', 'Alarmtext machine constructor', 'Alarmtext English', 'Dutch translation', 'Interlocks', 'Bypass', 'Stopmode', 'Scada Alarmnr', 'Tagname', 'WORD number', 'bit in WORD', 'LAlm address', 'PLC Data Type', 'PLC I/O', 'Class', 'PM67\nClass', 'VU-number', 'Picture', 'Opkleuring Object tag\n(tags)', 'Colour Picture', 'Lichtbalk\n(tekst)', 'Lichtbalk (nummer)', 'Popup (tekst)', 'QSI', 'Alert\nmonitoring', 'VQS reference', 'Special remarks', 'Horn/Buzzer', 'Pass / fail']
+    "Alarmlist": ['CRF / PCN', 'Version', 'PfizerNR', 'Alarmtext machine constructor (German)',
+ 'Alarmtext English', 'Dutch translation', 'Interlocks', 'Bypass', 'Stopmode',
+ 'Scada Alarmnr', 'Tagname', 'WORD number', 'bit in WORD', 'LAlm address',
+ 'PLC Data Type', 'PLC I/O', 'Class', 'PM67\nClass', 'VU-number', 'Picture',
+ 'Opkleuring\n(tags)', 'Color Picture', 'Lichtbalk\n(tekst)',
+ 'Lichtbalk (nummer)', 'Popup (tekst)', 'QSI', 'Alert\nmonitoring',
+ 'VQS reference', 'Hoorn / Buzzer', 'Special remarks', 'Pass / fail']
 }
 
 processor = ExcelProcessor(file_path, header_rows, column_names)
 processor.load_excel()
 
 df_alarmlist = processor.get_dataframe("Alarmlist").drop(0) # drop row index 0 ("VU X - VU Description")
+# Index aanpassen zodat deze start bij 5
+df_alarmlist.index = range(5, 5 + len(df_alarmlist))
 # print(list(df_alarmlist.columns.values))
-# print(df_alarmlist.head())
-
+print(df_alarmlist.head())
 
 # controle uitvoeren
 validator = DataValidator(processor.dataframes)
