@@ -1,52 +1,7 @@
-### ERRORS IN SHEET 'Alarmlist', COLUMN 'Alarmtext English' ###
-Rij 88: 'Verification fault: good container not at good discharge - consecutive alarm' is te lang (76 > 75)
-Rij 164: 'Control power circuit protection switch triggered - power supply for AS-I, field bus' is te lang (84 > 75)
-Rij 206: 'Wrong input: needle position at blow-cleaning start (M1) > distance needle up' is te lang (77 > 75)
-Rij 207: 'Wrong input: needle position at blow-cleaning stop (M1) > distance needle up' is te lang (76 > 75)
-Rij 210: 'Service function: sensor for container shortage/fallen container deactivated' is te lang (76 > 75)
-Rij 223: 'Service function: configuration keys of external temperature/pressure controllers released' is te lang (90 > 75)
-Rij 244: 'Download for new vial type detected. To avoid damage please remove all size parts now!' is te lang (86 > 75)
-Rij 332: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 333: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 334: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 335: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 336: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 337: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 338: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 339: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 340: 'Control power circuit protection switch triggered - power module for distributed I/O system of the PLC' is te lang (102 > 75)
-Rij 346: 'Control power circuit protection switch triggered - Touch button receiver unit -30C1' is te lang (84 > 75)
-Rij 350: 'Control power circuit protection switch triggered - height adjustment infeed rotary table' is te lang (89 > 75)
-Rij 351: 'Control power circuit protection switch triggered - infeed rotary transfer table' is te lang (80 > 75)
-Rij 353: 'Control power circuit protection switch triggered - gripper size adjustment at infeed' is te lang (85 > 75)
-Rij 354: 'Control power circuit protection switch triggered - gripper size adjustment at discharge' is te lang (88 > 75)
-Rij 356: 'Control power circuit protection switch triggered - Machine lighting under the baseplate' is te lang (88 > 75)
-Rij 359: 'Main power circuit protection switch triggered -Voltage monitoring main power supply' is te lang (84 > 75)
-Rij 360: 'Main power circuit protection switch triggered - Main circuit breaker power supply LAF' is te lang (86 > 75)
-Rij 361: 'Main power circuit protection switch triggered -Main circuit breaker power supply LAF' is te lang (85 > 75)
-
-
-### ERRORS IN SHEET 'Alarmlist', COLUMN 'Dutch translation' ###
-Rij 203: 'Verkeerde ingave : naald positie bij start WFI hoger dan naald positie boven' is te lang (76 > 75)
-Rij 205: 'Verkeerde ingave : naald positie bij start WFI hoger of gelijk aan positie stop WFI' is te lang (83 > 75)
-Rij 206: 'Verkeerde ingave : naald positie bij start drogen hoger dan naald positie boven' is te lang (79 > 75)
-Rij 207: 'Verkeerde ingave : naald positie bij stop drogen hoger dan naald positie boven' is te lang (78 > 75)
-Rij 208: 'Verkeerde ingave : naald positie bij start drogen groter of gelijk aan stop drogen' is te lang (82 > 75)
-Rij 244: 'Download van ander vial type gedetecteerd. Gelieve alle formaatdelen te verwijderen !' is te lang (85 > 75)
-
-
-### ERRORS IN SHEET 'Alarmlist', COLUMN 'Picture' ###
-Rij 33: '' is geen geldig .pdl-bestand.
-Rij 34: '' is geen geldig .pdl-bestand.
-Rij 35: '' is geen geldig .pdl-bestand.
-Rij 36: '' is geen geldig .pdl-bestand.
-Rij 380: '' is geen geldig .pdl-bestand.
-
-
 ### ERRORS IN SHEET 'Alarmlist', COLUMN 'Class' ###
-Rij 33: Dit veld mag niet leeg zijn!
-Rij 34: Dit veld mag niet leeg zijn!
-Rij 35: Dit veld mag niet leeg zijn!
-Rij 36: Dit veld mag niet leeg zijn!
+Rij 33: '' is geen geldige invoer. Moet één van ['A3', 'A4', 'A5', 'B', 'C1', 'C2', 'C3', 'D1', 'D2', 'D3'] zijn.
+Rij 34: '' is geen geldige invoer. Moet één van ['A3', 'A4', 'A5', 'B', 'C1', 'C2', 'C3', 'D1', 'D2', 'D3'] zijn.
+Rij 35: '' is geen geldige invoer. Moet één van ['A3', 'A4', 'A5', 'B', 'C1', 'C2', 'C3', 'D1', 'D2', 'D3'] zijn.
+Rij 36: '' is geen geldige invoer. Moet één van ['A3', 'A4', 'A5', 'B', 'C1', 'C2', 'C3', 'D1', 'D2', 'D3'] zijn.
 
 

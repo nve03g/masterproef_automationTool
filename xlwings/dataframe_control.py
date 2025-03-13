@@ -131,6 +131,46 @@ class DataValidator:
                 elif not must_be_empty and pd.isna(cell_value):
                     error_msg = f"Rij {index+4}: Dit veld mag niet leeg zijn!"
                     self.errors.append((sheetname, columnname, index+4, error_msg))
+                    
+    def input_select(self, sheetname, columnname, entries, mode=1, alarm_column_name="Alarmtext machine constructor (German)"):
+        """ 
+        checks if values in column correspond with the given possible entries
+        - mode = 1 : column can only contain ONE of the entries
+        - mode = 0 : column can contain ONE OR MORE of the entries
+        """
+        if sheetname not in self.dataframes:
+            print(f"Waarschuwing: Sheet '{sheetname}' niet gevonden.")
+            return
+        
+        df = self.dataframes[sheetname]
+        
+        if columnname not in df.columns:
+            print(f"Waarschuwing: Kolom '{columnname}' niet gevonden in '{sheetname}'.")
+            return
+
+        if alarm_column_name not in df.columns:
+            print(f"Waarschuwing: Alarm-kolom '{alarm_column_name}' niet gevonden in '{sheetname}'.")
+            return
+
+        # Controle per rij
+        for index, row in df.iterrows():
+            if self.alarm_exists(row, alarm_column_name):
+                cell_value = str(row[columnname]).strip() if pd.notna(row[columnname]) else ""
+
+                if mode == 1:
+                    if cell_value not in entries: # entries komt van config file
+                        error_msg = f"Rij {index+4}: '{cell_value}' is geen geldige invoer. Moet één van {entries} zijn."
+                        self.errors.append((sheetname, columnname, index+4, error_msg))
+                elif mode == 0:
+                    cell_values = {val.strip() for val in cell_value.split(',')} # Splits waarden op komma's en strip spaties
+                    
+                    if not cell_values.issubset(entries): # Controleer of ALLE waarden in entries staan
+                        invalid_values = cell_values - set(entries)
+                        error_msg = f"Rij {index+4}: Ongeldige waarden {invalid_values} gevonden. Alleen {entries} toegestaan."
+                        self.errors.append((sheetname, columnname, index+4, error_msg))
+                else:
+                    print("Ongeldige modus. Gebruik 1 voor exacte match, 0 voor gedeeltelijke match.")
+                    return
     
     def log_errors(self, logfile="error_log.txt"): # variabele naam van maken, afh van Excel file
         if not self.errors:
@@ -152,12 +192,12 @@ class DataValidator:
                 
         print(f"Fouten opgeslagen in {logfile}")
         
-file_path = "AlarmList_file_ingevuld.xlsx"
-header_rows = { # ingeven via config
+file_path_alarmlist = "AlarmList_file_ingevuld.xlsx"
+header_rows_alarmlist = { # ingeven via config
     "Alarmlist": 3,
     "Color Pictures": 3,
 }
-column_names = { # ingeven via config
+column_names_alarmlist = { # ingeven via config
     "Alarmlist": ['CRF / PCN', 'Version', 'PfizerNR', 'Alarmtext machine constructor (German)',
  'Alarmtext English', 'Dutch translation', 'Interlocks', 'Bypass', 'Stopmode',
  'Scada Alarmnr', 'Tagname', 'WORD number', 'bit in WORD', 'LAlm address',
@@ -167,24 +207,41 @@ column_names = { # ingeven via config
  'VQS reference', 'Hoorn / Buzzer', 'Special remarks', 'Pass / fail']
 }
 
-processor = ExcelProcessor(file_path, header_rows, column_names)
-processor.load_excel()
+file_path_VClist = "Visualisation&Commands_ingevuld.xlsm"
+header_rows_VClist = { # ingeven via config
+    "Measurement": 3,
+    "Controller": 3,
+}
+column_names_VClist = { # ingeven via config
+    "Alarmlist": ['CRF / PCN', 'Version', 'PfizerNR', 'Alarmtext machine constructor (German)',
+ 'Alarmtext English', 'Dutch translation', 'Interlocks', 'Bypass', 'Stopmode',
+ 'Scada Alarmnr', 'Tagname', 'WORD number', 'bit in WORD', 'LAlm address',
+ 'PLC Data Type', 'PLC I/O', 'Class', 'PM67\nClass', 'VU-number', 'Picture',
+ 'Opkleuring\n(tags)', 'Color Picture', 'Lichtbalk\n(tekst)',
+ 'Lichtbalk (nummer)', 'Popup (tekst)', 'QSI', 'Alert\nmonitoring',
+ 'VQS reference', 'Hoorn / Buzzer', 'Special remarks', 'Pass / fail']
+}
 
-df_alarmlist = processor.get_dataframe("Alarmlist").drop(0) # drop row index 0 ("VU X - VU Description")
+processor_alarmlist = ExcelProcessor(file_path_alarmlist, header_rows_alarmlist, column_names_alarmlist)
+processor_alarmlist.load_excel()
+
+df_alarmlist = processor_alarmlist.get_dataframe("Alarmlist").drop(0) # drop row index 0 ("VU X - VU Description")
 # Index aanpassen zodat deze start bij 5
 df_alarmlist.index = range(5, 5 + len(df_alarmlist))
 # print(list(df_alarmlist.columns.values))
-print(df_alarmlist.head())
+# print(df_alarmlist.head())
 
 # controle uitvoeren
-validator = DataValidator(processor.dataframes)
+validator_alarmlist = DataValidator(processor_alarmlist.dataframes)
 
-validator.max_characters("Alarmlist", "Alarmtext English", 75)
-validator.max_characters("Alarmlist", "Dutch translation", 75)
+# validator_alarmlist.max_characters("Alarmlist", "Alarmtext English", 75)
+# validator_alarmlist.max_characters("Alarmlist", "Dutch translation", 75)
 
-validator.file_type("Alarmlist", "Picture", "Alarmtext machine constructor (German)", ".pdl")
+# validator_alarmlist.file_type("Alarmlist", "Picture", "Alarmtext machine constructor (German)", ".pdl")
 
-validator.empty("Alarmlist", "Pass / fail", must_be_empty=True)
-validator.empty("Alarmlist", "Class", must_be_empty=False)
+# validator_alarmlist.empty("Alarmlist", "Pass / fail", must_be_empty=True)
+# validator_alarmlist.empty("Alarmlist", "Class", must_be_empty=False)
 
-validator.log_errors()
+# validator_alarmlist.input_select("Alarmlist", "Class", ["A3", "A4", "A5", "B", "C1", "C2", "C3", "D1", "D2", "D3"], 1)
+
+# validator_alarmlist.log_errors()
