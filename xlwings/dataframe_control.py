@@ -68,6 +68,16 @@ class DataValidator:
                 error_msg = f"Rij {index+4}: '{value}' is te lang ({len(value)} > {max_chars})"
                 self.errors.append((sheetname, columnname, index+4, error_msg))
     
+    def alarm_exists(self, row, alarm_column_name="Alarmtext machine constructor (German)"):
+        """ checks if alarm exists in given row, returns boolean """
+        if alarm_column_name not in row.index:
+            print(f"Waarschuwing: Kolom '{alarm_column_name}' niet gevonden.")
+            return False
+        
+        value = str(row[alarm_column_name]).strip() if pd.notna(row[alarm_column_name]) else ""
+        no_alarm_values = {"reserved", "gereserveerd", "spare", ""} # config
+        
+        return value.lower() not in no_alarm_values # True if alarm exists
                 
     def log_errors(self, logfile="error_log.txt"): # variabele naam van maken, afh van Excel file
         if not self.errors:
