@@ -179,10 +179,11 @@ print(df_alarmlist.head())
 # controle uitvoeren
 validator = DataValidator(processor.dataframes)
 
-validator.max_characters("Alarmlist", "Alarmtext English", 75)
-validator.max_characters("Alarmlist", "Dutch translation", 75)
+validator.max_characters("Alarmlist", ["Alarmtext English", "Dutch translation"], 75)
+# config -> test die je aan kolom wil toevoegen en alle bijhorende parameters
+# validator.max_characters("Alarmlist", "Dutch translation", 75)
 
-validator.file_type("Alarmlist", "Picture", "Alarmtext machine constructor (German)", ".pdl")
+validator.file_type("Alarmlist", "Picture", ".pdl")
 
 validator.empty("Alarmlist", "Pass / fail", must_be_empty=True)
 validator.empty("Alarmlist", "Class", must_be_empty=False)
