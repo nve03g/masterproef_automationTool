@@ -104,6 +104,34 @@ class DataValidator:
                     error_msg = f"Rij {index+4}: '{cell_value}' is geen geldig {file_extension}-bestand."
                     self.errors.append((sheetname, columnname, index+4, error_msg))
                 
+    def empty(self, sheetname, columnname, alarm_column_name="Alarmtext machine constructor (German)", must_be_empty=True):
+        """ checks whether given column is empty or not, depending on parameter """
+        if sheetname not in self.dataframes:
+            print(f"Waarschuwing: Sheet '{sheetname}' niet gevonden.")
+            return
+        
+        df = self.dataframes[sheetname]
+        
+        if columnname not in df.columns:
+            print(f"Waarschuwing: Kolom '{columnname}' niet gevonden in '{sheetname}'.")
+            return
+
+        if alarm_column_name not in df.columns:
+            print(f"Waarschuwing: Alarm-kolom '{alarm_column_name}' niet gevonden in '{sheetname}'.")
+            return
+        
+        # controle per rij
+        for index, row in df.iterrows():
+            if self.alarm_exists(row, alarm_column_name):
+                cell_value = row[columnname]
+                
+                if must_be_empty and pd.notna(cell_value):
+                    error_msg = f"Rij {index+4}: '{cell_value}' moet leeg zijn, maar bevat een waarde!"
+                    self.errors.append((sheetname, columnname, index+4, error_msg))
+                elif not must_be_empty and pd.isna(cell_value):
+                    error_msg = f"Rij {index+4}: Dit veld mag niet leeg zijn!"
+                    self.errors.append((sheetname, columnname, index+4, error_msg))
+    
     def log_errors(self, logfile="error_log.txt"): # variabele naam van maken, afh van Excel file
         if not self.errors:
             print("Geen fouten gevonden")
@@ -155,5 +183,8 @@ validator.max_characters("Alarmlist", "Alarmtext English", 75)
 validator.max_characters("Alarmlist", "Dutch translation", 75)
 
 validator.file_type("Alarmlist", "Picture", "Alarmtext machine constructor (German)", ".pdl")
+
+validator.empty("Alarmlist", "Pass / fail", must_be_empty=True)
+validator.empty("Alarmlist", "Class", must_be_empty=False)
 
 validator.log_errors()

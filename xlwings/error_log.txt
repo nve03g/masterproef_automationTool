@@ -43,3 +43,10 @@ Rij 36: '' is geen geldig .pdl-bestand.
 Rij 380: '' is geen geldig .pdl-bestand.
 
 
+### ERRORS IN SHEET 'Alarmlist', COLUMN 'Class' ###
+Rij 33: Dit veld mag niet leeg zijn!
+Rij 34: Dit veld mag niet leeg zijn!
+Rij 35: Dit veld mag niet leeg zijn!
+Rij 36: Dit veld mag niet leeg zijn!
+
+
