@@ -1,5 +1,6 @@
 import pandas as pd
 import warnings
+from collections import defaultdict
 
 warnings.simplefilter("ignore", UserWarning) # we krijgen warning dat openpyxl geen dropdownlijsten in excel meer ondersteunt, maar dat is geen probleem want die controle ga ik via mijn python code uitvoeren, dus deze warning mag genegeerd worden
 
@@ -71,9 +72,18 @@ class DataValidator:
             print("Geen fouten gevonden")
             return
         
+        grouped_errors = defaultdict(list)
+        
+        # group errors per (sheet, column)
+        for sheet, column, row, message in self.errors:
+            grouped_errors[(sheet, column)].append(message)
+        
         with open(logfile, "w") as log:
-            for sheet, column, row, message in self.errors:
-                log.write(f"[{sheet}] {message}\n")
+            for (sheet, column), messages in grouped_errors.items():
+                log.write(f"### ERRORS IN SHEET '{sheet}', COLUMN '{column}' ###\n")
+                for message in messages:
+                    log.write(f"{message}\n")
+                log.write("\n\n")
                 
         print(f"Fouten opgeslagen in {logfile}")
         
@@ -98,6 +108,5 @@ df_alarmlist = processor.get_dataframe("Alarmlist").drop(0) # drop row index 0 (
 validator = DataValidator(processor.dataframes)
 
 validator.max_characters("Alarmlist", "Alarmtext English", 75)
-validator.log_errors()
 validator.max_characters("Alarmlist", "Dutch translation", 75)
 validator.log_errors()
