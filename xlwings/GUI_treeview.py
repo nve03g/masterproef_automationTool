@@ -11,6 +11,7 @@ class ExcelTreeview:
         self.root = root
         self.df = df
         self.root.title("Window title")
+        self.root.geometry("1000x1000") # important to define window size!
         
         # frame for treeview and scrollbars
         self.frame = ttk.Frame(self.root)
