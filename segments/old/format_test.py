@@ -70,8 +70,8 @@ for i in range(1,last_row_index+1):
     font_color = sheet.range(f'A{i}').font.color
     print(f"tekstkleur (rgb): {font_color}")
 
-    print(f"Lettertype: {sheet.range(f'A{i}').font.name}")
-    print(f"Vet: {sheet.range(f'A{i}').font.bold}")
-    print(f"Cursief: {sheet.range(f'A{i}').font.italic}")
+    # print(f"Lettertype: {sheet.range(f'A{i}').font.name}")
+    # print(f"Vet: {sheet.range(f'A{i}').font.bold}")
+    # print(f"Cursief: {sheet.range(f'A{i}').font.italic}")
     # print(f"Doorhaling: {sheet.range(f'A{i}').api.Font.Strikethrough}") # werkt op Windows, niet op Mac
     print("\n")
