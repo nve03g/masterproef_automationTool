@@ -1,0 +1,18 @@
+{
+    "file_path": "AlarmList_file_ingevuld.xlsx",
+    "header_rows": {
+        "Alarmlist": 3,
+        "Color Pictures": 3
+    },
+    "column_names": {
+        "Alarmlist": [
+            "CRF / PCN", "Version", "PfizerNR", "Alarmtext machine constructor (German)",
+            "Alarmtext English", "Dutch translation", "Interlocks", "Bypass", "Stopmode",
+            "Scada Alarmnr", "Tagname", "WORD number", "bit in WORD", "LAlm address",
+            "PLC Data Type", "PLC I/O", "Class", "PM67\nClass", "VU-number", "Picture",
+            "Opkleuring\n(tags)", "Color Picture", "Lichtbalk\n(tekst)",
+            "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring",
+            "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"
+        ]
+    }
+}

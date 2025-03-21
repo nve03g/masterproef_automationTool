@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import pandas as pd
+import json
 import warnings
 
 warnings.simplefilter("ignore", UserWarning) # we krijgen warning dat openpyxl geen dropdownlijsten in excel meer ondersteunt, maar dat is geen probleem want die controle ga ik via mijn python code uitvoeren, dus deze warning mag genegeerd worden
@@ -58,17 +59,22 @@ class ExcelTreeview:
  
  
 class ExcelProcessor:
-    def __init__(self, filepath, headerrows, columnnames):
+    def __init__(self, config_path):
         """
         initialize Excel file processor
-        - filepath : str
-        - headerrows : {sheetname1: headerrow1, ...}, dictionary containing sheetnames and header-row-index
-        - columnnames : {sheetname1: [columnname1, columnname2, ...], ...}, dictionary containing sheetnames and a list of column names to load
+        - config_path : str, path to JSON config file
         """
-        self.filepath = filepath
-        self.headerrows = headerrows
-        self.columnnames = columnnames
+        self.load_config(config_path)
         self.dataframes = {} # dictionary containing all data {sheetname: DataFrame}
+        
+    def load_config(self, config_path):
+        """ Load configuration parameters from JSON file. """
+        with open(config_path, 'r', encoding="utf-8") as f:
+            config = json.load(f)
+        
+        self.filepath = config["file_path"]
+        self.headerrows = config["header_rows"]
+        self.columnnames = config["column_names"]
         
     def load_excel(self):
         # self.dataframes = pd.read_excel(self.filepath, sheet_name=self.sheetnames, header=self.headerrows)
@@ -92,24 +98,10 @@ class ExcelProcessor:
         """ get specific sheet (DataFrame) """
         return self.dataframes.get(sheetname)
     
- 
 
-file_path = "AlarmList_file_ingevuld.xlsx"
-header_rows = { # ingeven via config
-    "Alarmlist": 3,
-    "Color Pictures": 3,
-}
-column_names = { # ingeven via config
-    "Alarmlist": ['CRF / PCN', 'Version', 'PfizerNR', 'Alarmtext machine constructor (German)',
- 'Alarmtext English', 'Dutch translation', 'Interlocks', 'Bypass', 'Stopmode',
- 'Scada Alarmnr', 'Tagname', 'WORD number', 'bit in WORD', 'LAlm address',
- 'PLC Data Type', 'PLC I/O', 'Class', 'PM67\nClass', 'VU-number', 'Picture',
- 'Opkleuring\n(tags)', 'Color Picture', 'Lichtbalk\n(tekst)',
- 'Lichtbalk (nummer)', 'Popup (tekst)', 'QSI', 'Alert\nmonitoring',
- 'VQS reference', 'Hoorn / Buzzer', 'Special remarks', 'Pass / fail']
-}
 
-processor = ExcelProcessor(file_path, header_rows, column_names)
+config_file = "config.json"
+processor = ExcelProcessor(config_file)
 processor.load_excel()
 
 df_alarmlist = processor.get_dataframe("Alarmlist").drop(0) # drop row index 0 ("VU X - VU Description")
