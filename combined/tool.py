@@ -75,6 +75,7 @@ class ExcelProcessor:
         self.filepath = config["file_path"]
         self.headerrows = config["header_rows"]
         self.columnnames = config["column_names"]
+        self.index_start = config["index_start"]
         
     def load_excel(self):
         # self.dataframes = pd.read_excel(self.filepath, sheet_name=self.sheetnames, header=self.headerrows)
@@ -90,6 +91,10 @@ class ExcelProcessor:
                     valid_columns = [col for col in self.columnnames[sheet] if col in df.columns]
                     df = df[valid_columns]
                     
+                if sheet in self.index_start:
+                    df = df.drop(0) # verwijder eerste rij als die overbodig is
+                    df.index = range(self.index_start[sheet], self.index_start[sheet] + len(df))             
+                    
                 self.dataframes[sheet] = df
             else:
                 print(f"Waarschuwing: {sheet} niet gevonden in {self.filepath}")
@@ -104,9 +109,13 @@ config_file = "config.json"
 processor = ExcelProcessor(config_file)
 processor.load_excel()
 
-df_alarmlist = processor.get_dataframe("Alarmlist").drop(0) # drop row index 0 ("VU X - VU Description")
-# Index aanpassen zodat deze start bij 5
-df_alarmlist.index = range(5, 5 + len(df_alarmlist))
+## dit wordt nu in de ExcelProcessor classe gedaan
+# df_alarmlist = processor.get_dataframe("Alarmlist").drop(0) # drop row index 0 ("VU X - VU Description")
+# # Index aanpassen zodat deze start bij 5
+# df_alarmlist.index = range(5, 5 + len(df_alarmlist))
+# # print(list(df_alarmlist.columns.values))
+# # print(df_alarmlist.head())
+
 # print(list(df_alarmlist.columns.values))
 # print(df_alarmlist.head())
 

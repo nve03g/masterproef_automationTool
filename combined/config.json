@@ -14,5 +14,9 @@
             "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring",
             "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"
         ]
+    },
+    "index_start": {
+        "Alarmlist": 5,
+        "Color Pictures": 4
     }
 }
