@@ -61,13 +61,15 @@ class ExcelTreeview:
  
  
 class ExcelProcessor:
-    def __init__(self, config_path):
+    def __init__(self, config_path, profile):
         """
         initialize Excel file processor
         - config_path : str, path to JSON config file
+        - profile : str, huidige hardcoded profielaanwijzing (supplier, developer, operator)
         """
         self.load_config(config_path)
         self.dataframes = {} # dictionary containing all data {sheetname: DataFrame}
+        self.profile = profile
         
     def load_config(self, config_path):
         """ Load configuration parameters from JSON file. """
@@ -75,22 +77,32 @@ class ExcelProcessor:
             config = json.load(f)
         
         self.filepath = config["file_path"]
+        self.default_profile = config["default_profile"]
         self.headerrows = config["header_rows"]
-        self.columnnames = config["column_names"]
         self.index_start = config["index_start"]
+        self.columnnames = config["column_names"]
+        self.profiles = config["profiles"]
         
+    def set_profile(self, profile):
+        """ Set active profile (OR default profile). """
+        if profile not in self.profiles:
+            self.profile = self.default_profile
+        else:
+            self.profile = profile
+                
     def load_excel(self):
-        """ Laad de Excel-sheets in dataframes, met de opgegeven header-rij per sheet. """
+        """ Laad de Excel-sheets in dataframes, met de opgegeven header-rij per sheet en toegestane kolommen afhankelijk van het aangeduide profiel. """
         xls = pd.ExcelFile(self.filepath) # Open het Excel-bestand
         
         for sheet, header_row in self.headerrows.items():
             if sheet in xls.sheet_names:
                 df = pd.read_excel(self.filepath, sheet_name=sheet, header=header_row-1)
                 
-                # Filter enkel de gewenste kolommen als ze bestaan in de DataFrame
-                if sheet in self.columnnames:
-                    valid_columns = [col for col in self.columnnames[sheet] if col in df.columns]
-                    df = df[valid_columns]
+                # gebruik enkel toegewezen kolommen (afhankelijk van profiel)
+                allowed_columns = self.profiles[self.profile][sheet]
+                print(f"allowed columns: {allowed_columns}, profile: {self.profile}")
+                valid_columns = [col for col in allowed_columns if col in df.columns]
+                df = df[valid_columns]
                     
                 if sheet in self.index_start:
                     # verwijder overbodige rijen direct onder header
@@ -111,7 +123,8 @@ class ExcelProcessor:
 
 
 config_file = "config.json"
-processor = ExcelProcessor(config_file)
+current_profile = "operator" # wordt later ingesteld via GUI dropdown list
+processor = ExcelProcessor(config_file, profile=current_profile)
 processor.load_excel()
 
 

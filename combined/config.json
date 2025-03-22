@@ -1,5 +1,6 @@
 {
     "file_path": "AlarmList_file_ingevuld.xlsx",
+    "default_profile": "developer",
     "header_rows": {
         "Alarmlist": 3,
         "Color Pictures": 3
@@ -19,6 +20,44 @@
             "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"
         ],
         "Color Pictures": [
-            "CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"]
+            "CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"
+        ]
+    },
+    "profiles": {
+        "supplier": {
+            "Alarmlist": [
+            "Alarmtext machine constructor (German)",
+            "Alarmtext English", "Dutch translation", "Interlocks", "Bypass", "Stopmode",
+            "Class", "PM67\nClass", "Hoorn / Buzzer", "Special remarks"
+            ],
+            "Color Pictures": [
+                "Description", "Object type", "Special remarks"
+            ]
+        },
+        "developer": {
+            "Alarmlist": [
+            "CRF / PCN", "Version", "PfizerNR", "Alarmtext machine constructor (German)",
+            "Alarmtext English", "Dutch translation", "Interlocks", "Bypass", "Stopmode",
+            "Scada Alarmnr", "Tagname", "WORD number", "bit in WORD", "LAlm address",
+            "PLC Data Type", "PLC I/O", "Class", "PM67\nClass", "VU-number", "Picture",
+            "Opkleuring\n(tags)", "Color Picture", "Lichtbalk\n(tekst)",
+            "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring",
+            "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"
+            ],
+            "Color Pictures": [
+                "CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"
+            ]
+        },
+        "operator": {
+            "Alarmlist": [
+            "Scada Alarmnr", "Tagname", "LAlm address",
+            "PLC Data Type", "PLC I/O", "VU-number",
+            "Opkleuring\n(tags)", "Popup (tekst)", "QSI", "Alert\nmonitoring",
+            "VQS reference", "Pass / fail"
+            ],
+            "Color Pictures": [
+                "PfizerNR", "Tag", "SCADA Intern", "TAG Object status", "Pass / fail"
+            ]
+        }
     }
 }
