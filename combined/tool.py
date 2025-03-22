@@ -4,6 +4,8 @@ import pandas as pd
 import json
 import warnings
 
+## OPGEMERKT: laatste rij wordt niet juist berekend
+
 warnings.simplefilter("ignore", UserWarning) # we krijgen warning dat openpyxl geen dropdownlijsten in excel meer ondersteunt, maar dat is geen probleem want die controle ga ik via mijn python code uitvoeren, dus deze warning mag genegeerd worden
 
 class ExcelTreeview:
@@ -78,7 +80,6 @@ class ExcelProcessor:
         self.index_start = config["index_start"]
         
     def load_excel(self):
-        # self.dataframes = pd.read_excel(self.filepath, sheet_name=self.sheetnames, header=self.headerrows)
         """ Laad de Excel-sheets in dataframes, met de opgegeven header-rij per sheet. """
         xls = pd.ExcelFile(self.filepath) # Open het Excel-bestand
         
@@ -92,8 +93,12 @@ class ExcelProcessor:
                     df = df[valid_columns]
                     
                 if sheet in self.index_start:
-                    df = df.drop(0) # verwijder eerste rij als die overbodig is
-                    df.index = range(self.index_start[sheet], self.index_start[sheet] + len(df))             
+                    # verwijder overbodige rijen direct onder header
+                    if (self.index_start[sheet] - self.headerrows[sheet] - 2) >= 0: # dan moeten we x aantal eerste rijen in df verwijderen
+                        df = df.drop([i for i in range(self.index_start[sheet]-self.headerrows[sheet]-1)]) # -2+1 want anders range(0,0), dan krijg je lege lijst (rij 0 wordt niet gedropt)
+                    
+                    # pas index aan conform Excel lijst
+                    df.index = range(self.index_start[sheet], self.index_start[sheet] + len(df))                                 
                     
                 self.dataframes[sheet] = df
             else:
@@ -109,15 +114,14 @@ config_file = "config.json"
 processor = ExcelProcessor(config_file)
 processor.load_excel()
 
-## dit wordt nu in de ExcelProcessor classe gedaan
-# df_alarmlist = processor.get_dataframe("Alarmlist").drop(0) # drop row index 0 ("VU X - VU Description")
-# # Index aanpassen zodat deze start bij 5
-# df_alarmlist.index = range(5, 5 + len(df_alarmlist))
-# # print(list(df_alarmlist.columns.values))
-# # print(df_alarmlist.head())
 
+## dit gebruik ik om lijst te printen van alle kolomnamen, juiste syntax
+df_alarmlist = processor.get_dataframe("Alarmlist")
 # print(list(df_alarmlist.columns.values))
-# print(df_alarmlist.head())
+
+df_cp = processor.get_dataframe("Color Pictures")
+# print(list(df_cp.columns.values))
+
 
 root = tk.Tk()
 app = ExcelTreeview(root, df_alarmlist)

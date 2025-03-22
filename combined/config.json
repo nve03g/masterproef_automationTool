@@ -4,6 +4,10 @@
         "Alarmlist": 3,
         "Color Pictures": 3
     },
+    "index_start": {
+        "Alarmlist": 5,
+        "Color Pictures": 4
+    },
     "column_names": {
         "Alarmlist": [
             "CRF / PCN", "Version", "PfizerNR", "Alarmtext machine constructor (German)",
@@ -13,10 +17,8 @@
             "Opkleuring\n(tags)", "Color Picture", "Lichtbalk\n(tekst)",
             "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring",
             "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"
-        ]
-    },
-    "index_start": {
-        "Alarmlist": 5,
-        "Color Pictures": 4
+        ],
+        "Color Pictures": [
+            "CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"]
     }
 }
