@@ -9,16 +9,22 @@ import warnings
 warnings.simplefilter("ignore", UserWarning) # we krijgen warning dat openpyxl geen dropdownlijsten in excel meer ondersteunt, maar dat is geen probleem want die controle ga ik via mijn python code uitvoeren, dus deze warning mag genegeerd worden
 
 class ExcelTreeview:
-    def __init__(self, root, df):
-        """ class that shows a dataframe in a treeview """
+    def __init__(self, root, processor):
+        """ GUI class showing dropdown for profile selection and treeview to display dataframe. """
         self.root = root
-        self.df = df
-        self.root.title("Window title")
-        self.root.geometry("1000x1000") # important to define window size!w
+        self.processor = processor
+        self.root.title("Pfizer Automation Tool")
+        self.root.geometry("1000x800") # important to define window size!
         
-        # frame for treeview and scrollbars
+        # frame for dropdown and treeview
         self.frame = ttk.Frame(self.root)
         self.frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        
+        # dropdown menu for profile selection
+        self.profile_var = tk.StringVar(value=self.processor.profile)
+        self.profile_dropdown = ttk.Combobox(self.frame, textvariable=self.profile_var, values=list(self.processor.profiles.keys()), state="readonly") # processor.profiles.keys() geeft alle mogelijke profielen aangegeven in config file
+        self.profile_dropdown.pack(pady=5)
+        self.profile_dropdown.bind("<<ComboboxSelected>>", self.update_profile)
         
         # scrollbars
         self.vsb = ttk.Scrollbar(self.frame, orient="vertical")
@@ -27,39 +33,45 @@ class ExcelTreeview:
         # treeview widget
         self.tree = ttk.Treeview(
             self.frame,
-            columns=list(self.df.columns),
             show="headings",
             yscrollcommand=self.vsb.set,
             xscrollcommand=self.hsb.set
         )
-        
         # koppel scrollbars
         self.vsb.config(command=self.tree.yview)
         self.hsb.config(command=self.tree.xview)
 
-        # grid positioning
-        self.tree.grid(row=0, column=0, sticky='nsew')
-        self.vsb.grid(row=0, column=1, sticky='ns')
-        self.hsb.grid(row=1, column=0, sticky='ew')
+        # set grid layout
+        self.tree.pack(fill=tk.BOTH, expand=True)
+        self.vsb.pack(side=tk.RIGHT, fill=tk.Y)
+        self.hsb.pack(side=tk.BOTTOM, fill=tk.X)
 
-        # frame layout configureren
-        self.frame.grid_rowconfigure(0, weight=1)
-        self.frame.grid_columnconfigure(0, weight=1)
+        # show initial data
+        self.load_treeview()
         
-        # kolomheaders instellen
-        for col in self.df.columns:
-            self.tree.heading(col, text=col)
-            self.tree.column(col, width=100, anchor="w") # standaardbreedte instellen
-
-        # voeg rijen toe aan treeview
-        self.populate_treeview()
+    def update_profile(self, event=None):
+        """ Update user profile and load correct data into treeview. """
+        new_profile = self.profile_var.get()
+        self.processor.set_profile(new_profile)
+        self.processor.load_excel() # load excel file with new profile
+        self.load_treeview()
         
-    def populate_treeview(self):
-        """ Voeg data uit dataframe toe aan de treeview."""
-        for _, row in self.df.iterrows():
-            self.tree.insert("", "end", values=row.tolist())
- 
- 
+    def load_treeview(self):
+        """ Reload treeview with correct columns and data. """
+        self.tree.delete(*self.tree.get_children()) # delete current data
+        
+        df = self.processor.get_dataframe("Color Pictures") # toon standaard deze sheet
+        if df is not None:
+            self.tree["columns"] = list(df.columns)
+            for col in df.columns:
+                self.tree.heading(col, text=col)
+                self.tree.column(col, width=100, anchor="w")
+                
+            # populate treeview
+            for _, row in df.iterrows():
+                self.tree.insert("", "end", values=row.tolist())
+        
+        
 class ExcelProcessor:
     def __init__(self, config_path, profile):
         """
@@ -70,6 +82,7 @@ class ExcelProcessor:
         self.load_config(config_path)
         self.dataframes = {} # dictionary containing all data {sheetname: DataFrame}
         self.profile = profile
+        self.load_excel()
         
     def load_config(self, config_path):
         """ Load configuration parameters from JSON file. """
@@ -92,7 +105,7 @@ class ExcelProcessor:
                 
     def load_excel(self):
         """ Laad de Excel-sheets in dataframes, met de opgegeven header-rij per sheet en toegestane kolommen afhankelijk van het aangeduide profiel. """
-        xls = pd.ExcelFile(self.filepath) # Open het Excel-bestand
+        xls = pd.ExcelFile(self.filepath) # open het Excel-bestand
         
         for sheet, header_row in self.headerrows.items():
             if sheet in xls.sheet_names:
@@ -100,7 +113,6 @@ class ExcelProcessor:
                 
                 # gebruik enkel toegewezen kolommen (afhankelijk van profiel)
                 allowed_columns = self.profiles[self.profile][sheet]
-                print(f"allowed columns: {allowed_columns}, profile: {self.profile}")
                 valid_columns = [col for col in allowed_columns if col in df.columns]
                 df = df[valid_columns]
                     
@@ -125,17 +137,16 @@ class ExcelProcessor:
 config_file = "config.json"
 current_profile = "operator" # wordt later ingesteld via GUI dropdown list
 processor = ExcelProcessor(config_file, profile=current_profile)
-processor.load_excel()
 
 
 ## dit gebruik ik om lijst te printen van alle kolomnamen, juiste syntax
-df_alarmlist = processor.get_dataframe("Alarmlist")
+# df_alarmlist = processor.get_dataframe("Alarmlist")
 # print(list(df_alarmlist.columns.values))
 
-df_cp = processor.get_dataframe("Color Pictures")
+# df_cp = processor.get_dataframe("Color Pictures")
 # print(list(df_cp.columns.values))
 
 
 root = tk.Tk()
-app = ExcelTreeview(root, df_alarmlist)
+app = ExcelTreeview(root, processor)
 root.mainloop()
