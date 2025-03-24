@@ -21,10 +21,16 @@ class ExcelTreeview:
         self.frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
         
         # dropdown menu for profile selection
-        self.profile_var = tk.StringVar(value=self.processor.profile)
+        self.profile_var = tk.StringVar() # no start-value
         self.profile_dropdown = ttk.Combobox(self.frame, textvariable=self.profile_var, values=list(self.processor.profiles.keys()), state="readonly") # processor.profiles.keys() geeft alle mogelijke profielen aangegeven in config file
         self.profile_dropdown.pack(pady=5)
         self.profile_dropdown.bind("<<ComboboxSelected>>", self.update_profile)
+        
+        # dropdown menu for sheet selection
+        self.sheet_var = tk.StringVar() # no start-value
+        self.sheet_dropdown = ttk.Combobox(self.frame, textvariable=self.sheet_var, state="readonly")
+        self.sheet_dropdown.pack(pady=5)
+        self.sheet_dropdown.bind("<<ComboboxSelected>>", self.update_sheet)
         
         # scrollbars
         self.vsb = ttk.Scrollbar(self.frame, orient="vertical")
@@ -53,14 +59,31 @@ class ExcelTreeview:
         """ Update user profile and load correct data into treeview. """
         new_profile = self.profile_var.get()
         self.processor.set_profile(new_profile)
+        self.update_sheet_options() # update sheet dropdown options based on selected profile
         self.processor.load_excel() # load excel file with new profile
         self.load_treeview()
         
-    def load_treeview(self):
-        """ Reload treeview with correct columns and data. """
+    def update_sheet_options(self):
+        """ Update the available sheet options in dropdown list according to current frofile. """
+        available_sheets = self.processor.get_config_sheets() # get sheets for current user profile out of config file
+        self.sheet_dropdown['values'] = available_sheets
+        if available_sheets:
+            self.sheet_var.set(available_sheets[0]) # set default to first available sheet
+        self.update_sheet() # automatically load the first sheet after update
+        
+    def update_sheet(self, event=None):
+        """ Update the treeview with data from selected sheet. """
+        sheet_name = self.sheet_var.get()
+        self.load_treeview(sheet_name)
+        
+    def load_treeview(self, sheet_name=None):
+        """ Reload treeview with correct sheet, columns and data. """
         self.tree.delete(*self.tree.get_children()) # delete current data
         
-        df = self.processor.get_dataframe("Color Pictures") # toon standaard deze sheet
+        if sheet_name is None:
+            sheet_name = self.sheet_var.get() # default to the currently selected sheet
+        
+        df = self.processor.get_dataframe(sheet_name) # get dataframe for selected sheet
         if df is not None:
             self.tree["columns"] = list(df.columns)
             for col in df.columns:
@@ -95,6 +118,14 @@ class ExcelProcessor:
         self.index_start = config["index_start"]
         self.columnnames = config["column_names"]
         self.profiles = config["profiles"]
+        
+    def get_config_sheets(self):
+        """ Return list of available sheets for current profile. """
+        available_sheets = []
+        for sheet in self.headerrows.keys():
+            if sheet in self.profiles[self.profile]:
+                available_sheets.append(sheet)
+        return available_sheets
         
     def set_profile(self, profile):
         """ Set active profile (OR default profile). """
