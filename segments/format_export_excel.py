@@ -5,6 +5,8 @@ from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font, PatternFill # export font data to Excel
 from openpyxl.styles.colors import Color, RGB # for converting rgb color value to a Color object
 
+import xlwings as xw
+
 warnings.simplefilter("ignore", UserWarning) # we krijgen warning dat openpyxl geen dropdownlijsten in excel meer ondersteunt, maar dat is geen probleem want die controle ga ik via mijn python code uitvoeren, dus deze warning mag genegeerd worden
 
 class ExcelDataProcessor:
@@ -25,17 +27,19 @@ class ExcelDataProcessor:
     def load_formatting(self):
         """ Laad formattering per cel in dicts in dfs. """
         try:
-            wb = load_workbook(self.filepath)
-            for sheet in wb.sheetnames:
-                ws = wb[sheet]
+            wb_xl = load_workbook(self.filepath)
+            wb_xw = xw.Book(self.filepath)
+            for sheet in wb_xl.sheetnames:
+                ws_xl = wb_xl[sheet]
+                ws_xw = wb_xw[sheet]
                 
                 format_data = []
                 
-                for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=ws.max_column):
+                for row in ws_xl.iter_rows(min_row=1, max_row=ws_xl.max_row, min_col=1, max_col=ws_xl.max_column):
                     format_row = [
                         {
-                            "cell color": cell.fill.fgColor.rgb if cell.fill.fgColor is not None else "FFFFFF",
-                            "text color": cell.font.color.rgb if cell.font.color is not None else "000000", # doesn't return a string if no particular color was set (default: black text)
+                            "cell color": ws_xw.range((cell.row, cell.column)).color, # geeft een tuple (R, G, B) of None als geen kleur ingesteld
+                            "text color": ws_xw.range((cell.row, cell.column)).font.color, # geeft een tuple (R, G, B), (0, 0, 0) als geen kleur ingesteld (default zwarte tekst)
                             "font": cell.font.name,
                             "bold": cell.font.bold,
                             "italic": cell.font.italic,
@@ -105,7 +109,7 @@ processor = ExcelDataProcessor(file_path)
 processor.load_all_sheets()
 processor.load_formatting()
 
-processor.export_new_excel(output_file_path)
+# processor.export_new_excel(output_file_path)
 
 data_dictionary = processor.data_dfs
 format_dictionary = processor.format_dfs
