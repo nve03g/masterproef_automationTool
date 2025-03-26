@@ -1,12 +1,14 @@
 import tkinter as tk
-from tkinter import ttk
-import pandas as pd
+from tkinter import ttk, filedialog
 import json
 import warnings
+import pandas as pd
 
-## OPGEMERKT: laatste rij wordt niet juist berekend
+# REMARK: last data row isn't correctly calculated
 
-warnings.simplefilter("ignore", UserWarning) # we krijgen warning dat openpyxl geen dropdownlijsten in excel meer ondersteunt, maar dat is geen probleem want die controle ga ik via mijn python code uitvoeren, dus deze warning mag genegeerd worden
+# We get a warning that openpyxl no longer supports dropdown lists in Excel, but that's not a problem because we’re performing that check through the python code, so this warning may be ignored.
+warnings.simplefilter("ignore", UserWarning) 
+
 
 class ExcelTreeview:
     def __init__(self, root, processor):
@@ -14,20 +16,20 @@ class ExcelTreeview:
         self.root = root
         self.processor = processor
         self.root.title("Pfizer Automation Tool")
-        self.root.geometry("1000x800") # important to define window size!
-        
-        # frame for dropdown and treeview
+        self.root.geometry("1000x800")  # It's important to define window size!
+      
+        # Frame for dropdown and treeview.
         self.frame = ttk.Frame(self.root)
         self.frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
         
-        # dropdown menu for profile selection
-        self.profile_var = tk.StringVar() # no start-value
-        self.profile_dropdown = ttk.Combobox(self.frame, textvariable=self.profile_var, values=list(self.processor.profiles.keys()), state="readonly") # processor.profiles.keys() geeft alle mogelijke profielen aangegeven in config file
+        # Dropdown menu for profile selection.
+        self.profile_var = tk.StringVar()  # no start-value
+        self.profile_dropdown = ttk.Combobox(self.frame, textvariable=self.profile_var, values=list(self.processor.profiles.keys()), state="readonly")  # processor.profiles.keys() gives all possible profiles specified in the config file
         self.profile_dropdown.pack(pady=5)
         self.profile_dropdown.bind("<<ComboboxSelected>>", self.update_profile)
         
-        # dropdown menu for sheet selection
-        self.sheet_var = tk.StringVar() # no start-value
+        # Dropdown menu for sheet selection.
+        self.sheet_var = tk.StringVar()  # no start-value
         self.sheet_dropdown = ttk.Combobox(self.frame, textvariable=self.sheet_var, state="readonly")
         self.sheet_dropdown.pack(pady=5)
         self.sheet_dropdown.bind("<<ComboboxSelected>>", self.update_sheet)
@@ -43,47 +45,47 @@ class ExcelTreeview:
             yscrollcommand=self.vsb.set,
             xscrollcommand=self.hsb.set
         )
-        # koppel scrollbars
+        # Link the scrollbars to the treeview.
         self.vsb.config(command=self.tree.yview)
         self.hsb.config(command=self.tree.xview)
 
-        # set grid layout
+        # Set grid layout.
         self.tree.pack(fill=tk.BOTH, expand=True)
         self.vsb.pack(side=tk.RIGHT, fill=tk.Y)
         self.hsb.pack(side=tk.BOTTOM, fill=tk.X)
 
-        # show initial data
+        # Show initial data in the treeview.
         self.load_treeview()
         
-    def update_profile(self, event=None):
+    def update_profile(self):
         """ Update user profile and load correct data into treeview. """
         new_profile = self.profile_var.get()
         self.processor.set_profile(new_profile)
-        self.update_sheet_options() # update sheet dropdown options based on selected profile
-        self.processor.load_excel() # load excel file with new profile
+        self.update_sheet_options()  # Update sheet dropdown options based on selected profile.
+        self.processor.load_excel()  # Load excel file with new profile.
         self.load_treeview()
         
     def update_sheet_options(self):
         """ Update the available sheet options in dropdown list according to current frofile. """
-        available_sheets = self.processor.get_config_sheets() # get sheets for current user profile out of config file
+        available_sheets = self.processor.get_config_sheets()  # Get the sheets for current user profile out of config file.
         self.sheet_dropdown['values'] = available_sheets
         if available_sheets:
-            self.sheet_var.set(available_sheets[0]) # set default to first available sheet
-        self.update_sheet() # automatically load the first sheet after update
+            self.sheet_var.set(available_sheets[0])  # Set default to the first available sheet.
+        self.update_sheet()  # Automatically load the first sheet after update.
         
-    def update_sheet(self, event=None):
+    def update_sheet(self):
         """ Update the treeview with data from selected sheet. """
         sheet_name = self.sheet_var.get()
         self.load_treeview(sheet_name)
         
     def load_treeview(self, sheet_name=None):
         """ Reload treeview with correct sheet, columns and data. """
-        self.tree.delete(*self.tree.get_children()) # delete current data
+        self.tree.delete(*self.tree.get_children())  # Delete the current treeview data.
         
         if sheet_name is None:
-            sheet_name = self.sheet_var.get() # default to the currently selected sheet
+            sheet_name = self.sheet_var.get()  # By default take the current selected sheet.
         
-        df = self.processor.get_dataframe(sheet_name) # get dataframe for selected sheet
+        df = self.processor.get_dataframe(sheet_name)  # Get dataframe for selected sheet.
         if df is not None:
             self.tree["columns"] = list(df.columns)
             for col in df.columns:
@@ -103,7 +105,7 @@ class ExcelProcessor:
         - profile : str, huidige hardcoded profielaanwijzing (supplier, developer, operator)
         """
         self.load_config(config_path)
-        self.dataframes = {} # dictionary containing all data {sheetname: DataFrame}
+        self.dataframes = {}  # Dictionary containing all data {sheetname: DataFrame}.
         self.profile = profile
         self.load_excel()
         
@@ -135,42 +137,42 @@ class ExcelProcessor:
             self.profile = profile
                 
     def load_excel(self):
-        """ Laad de Excel-sheets in dataframes, met de opgegeven header-rij per sheet en toegestane kolommen afhankelijk van het aangeduide profiel. """
-        xls = pd.ExcelFile(self.filepath) # open het Excel-bestand
+        """ Load the Excel sheets into dataframes, with the specified header row per sheet and columns allowed depending on the indicated profile. """
+        xls = pd.ExcelFile(self.filepath)  # Open the Excel-file.
         
         for sheet, header_row in self.headerrows.items():
             if sheet in xls.sheet_names:
                 df = pd.read_excel(self.filepath, sheet_name=sheet, header=header_row-1)
                 
-                # gebruik enkel toegewezen kolommen (afhankelijk van profiel)
+                # Only use profile-assigned columns.
                 allowed_columns = self.profiles[self.profile][sheet]
                 valid_columns = [col for col in allowed_columns if col in df.columns]
                 df = df[valid_columns]
                     
                 if sheet in self.index_start:
-                    # verwijder overbodige rijen direct onder header
-                    if (self.index_start[sheet] - self.headerrows[sheet] - 2) >= 0: # dan moeten we x aantal eerste rijen in df verwijderen
-                        df = df.drop([i for i in range(self.index_start[sheet]-self.headerrows[sheet]-1)]) # -2+1 want anders range(0,0), dan krijg je lege lijst (rij 0 wordt niet gedropt)
+                    # Delete excess rows that are right below the header row(s).
+                    if (self.index_start[sheet] - self.headerrows[sheet] - 2) >= 0:  # Then we have to delete the first x rows in the dataframe.
+                        df = df.drop([i for i in range(self.index_start[sheet]-self.headerrows[sheet]-1)])  # -2+1 because else range(0,0), then we get an empty list (row 0 doesn't get dropped from the dataframe)
                     
-                    # pas index aan conform Excel lijst
+                    # Adjust indices to match Excel row indeces.
                     df.index = range(self.index_start[sheet], self.index_start[sheet] + len(df))                                 
                     
                 self.dataframes[sheet] = df
             else:
-                print(f"Waarschuwing: {sheet} niet gevonden in {self.filepath}")
+                print(f"Warning: {sheet} not found in {self.filepath}.")
         
     def get_dataframe(self, sheetname):
-        """ get specific sheet (DataFrame) """
+        """ Get a specific sheet (DataFrame). """
         return self.dataframes.get(sheetname)
     
 
 
 config_file = "config.json"
-current_profile = "operator" # wordt later ingesteld via GUI dropdown list
+current_profile = "operator"  # Will later be set through GUI dropdown list.
 processor = ExcelProcessor(config_file, profile=current_profile)
 
 
-## dit gebruik ik om lijst te printen van alle kolomnamen, juiste syntax
+# I use these lines to print a list of all column names for a specific sheet in the right syntax, to be able to put it correctly in the config file.
 # df_alarmlist = processor.get_dataframe("Alarmlist")
 # print(list(df_alarmlist.columns.values))
 
