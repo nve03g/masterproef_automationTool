@@ -6,31 +6,46 @@ import pandas as pd
 
 # REMARK: last data row isn't correctly calculated
 
-# We get a warning that openpyxl no longer supports dropdown lists in Excel, but that's not a problem because we’re performing that check through the python code, so this warning may be ignored.
+# We get a warning that openpyxl no longer supports dropdown lists in Excel, 
+# but that's not a problem because we’re performing that check 
+# through the python code, so this warning may be ignored.
 warnings.simplefilter("ignore", UserWarning) 
 
 
 class ExcelTreeview:
     def __init__(self, root, processor):
-        """ GUI class showing dropdown for profile selection and treeview to display dataframe. """
+        """ 
+        GUI class showing dropdown for profile selection, 
+        sheet selection and treeview to display dataframe. 
+        """
         self.root = root
         self.processor = processor
         self.root.title("Pfizer Automation Tool")
         self.root.geometry("1000x800")  # It's important to define window size!
-      
+
         # Frame for dropdown and treeview.
         self.frame = ttk.Frame(self.root)
         self.frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
-        
+
         # Dropdown menu for profile selection.
         self.profile_var = tk.StringVar()  # no start-value
-        self.profile_dropdown = ttk.Combobox(self.frame, textvariable=self.profile_var, values=list(self.processor.profiles.keys()), state="readonly")  # processor.profiles.keys() gives all possible profiles specified in the config file
+        self.profile_dropdown = ttk.Combobox(
+            self.frame, 
+            textvariable=self.profile_var, 
+            values=list(self.processor.profiles.keys()),
+            # processor.profiles.keys() gives all possible profiles specified in the config file
+            state="readonly"
+            )
         self.profile_dropdown.pack(pady=5)
         self.profile_dropdown.bind("<<ComboboxSelected>>", self.update_profile)
-        
+
         # Dropdown menu for sheet selection.
         self.sheet_var = tk.StringVar()  # no start-value
-        self.sheet_dropdown = ttk.Combobox(self.frame, textvariable=self.sheet_var, state="readonly")
+        self.sheet_dropdown = ttk.Combobox(
+            self.frame, 
+            textvariable=self.sheet_var, 
+            state="readonly"
+            )
         self.sheet_dropdown.pack(pady=5)
         self.sheet_dropdown.bind("<<ComboboxSelected>>", self.update_sheet)
         
@@ -61,17 +76,22 @@ class ExcelTreeview:
         """ Update user profile and load correct data into treeview. """
         new_profile = self.profile_var.get()
         self.processor.set_profile(new_profile)
-        self.update_sheet_options()  # Update sheet dropdown options based on selected profile.
-        self.processor.load_excel()  # Load excel file with new profile.
+        # Update sheet dropdown options based on selected profile.
+        self.update_sheet_options()
+        # Load excel file with new profile.
+        self.processor.load_excel()
         self.load_treeview()
         
     def update_sheet_options(self):
         """ Update the available sheet options in dropdown list according to current frofile. """
-        available_sheets = self.processor.get_config_sheets()  # Get the sheets for current user profile out of config file.
+        # Get the sheets for current user profile out of config file.
+        available_sheets = self.processor.get_config_sheets()
         self.sheet_dropdown['values'] = available_sheets
         if available_sheets:
-            self.sheet_var.set(available_sheets[0])  # Set default to the first available sheet.
-        self.update_sheet()  # Automatically load the first sheet after update.
+            # Set default to the first available sheet.
+            self.sheet_var.set(available_sheets[0])
+        # Automatically load the first sheet after update.
+        self.update_sheet()
         
     def update_sheet(self):
         """ Update the treeview with data from selected sheet. """
@@ -80,12 +100,15 @@ class ExcelTreeview:
         
     def load_treeview(self, sheet_name=None):
         """ Reload treeview with correct sheet, columns and data. """
-        self.tree.delete(*self.tree.get_children())  # Delete the current treeview data.
+        # Delete the current treeview data.
+        self.tree.delete(*self.tree.get_children())
         
         if sheet_name is None:
-            sheet_name = self.sheet_var.get()  # By default take the current selected sheet.
+            # By default take the current selected sheet.
+            sheet_name = self.sheet_var.get()
         
-        df = self.processor.get_dataframe(sheet_name)  # Get dataframe for selected sheet.
+        # Get dataframe for selected sheet.
+        df = self.processor.get_dataframe(sheet_name)
         if df is not None:
             self.tree["columns"] = list(df.columns)
             for col in df.columns:
@@ -105,7 +128,8 @@ class ExcelProcessor:
         - profile : str, huidige hardcoded profielaanwijzing (supplier, developer, operator)
         """
         self.load_config(config_path)
-        self.dataframes = {}  # Dictionary containing all data {sheetname: DataFrame}.
+        # Dictionary containing all data {sheetname: DataFrame}.
+        self.dataframes = {}
         self.profile = profile
         self.load_excel()
         
@@ -138,7 +162,8 @@ class ExcelProcessor:
                 
     def load_excel(self):
         """ Load the Excel sheets into dataframes, with the specified header row per sheet and columns allowed depending on the indicated profile. """
-        xls = pd.ExcelFile(self.filepath)  # Open the Excel-file.
+        # Open the Excel-file.
+        xls = pd.ExcelFile(self.filepath)
         
         for sheet, header_row in self.headerrows.items():
             if sheet in xls.sheet_names:
@@ -151,8 +176,10 @@ class ExcelProcessor:
                     
                 if sheet in self.index_start:
                     # Delete excess rows that are right below the header row(s).
-                    if (self.index_start[sheet] - self.headerrows[sheet] - 2) >= 0:  # Then we have to delete the first x rows in the dataframe.
-                        df = df.drop([i for i in range(self.index_start[sheet]-self.headerrows[sheet]-1)])  # -2+1 because else range(0,0), then we get an empty list (row 0 doesn't get dropped from the dataframe)
+                    if (self.index_start[sheet] - self.headerrows[sheet] - 2) >= 0:
+                        # We have to delete the first x rows in the dataframe.
+                        # -2+1 because else range(0,0), then we get an empty list (row 0 doesn't get dropped from the dataframe)
+                        df = df.drop([i for i in range(self.index_start[sheet]-self.headerrows[sheet]-1)])
                     
                     # Adjust indices to match Excel row indeces.
                     df.index = range(self.index_start[sheet], self.index_start[sheet] + len(df))                                 
