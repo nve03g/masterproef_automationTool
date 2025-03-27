@@ -1,8 +1,10 @@
-import tkinter as tk
-from tkinter import ttk, filedialog
+import sys
 import json
 import warnings
 import pandas as pd
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QPushButton, QTableView, QFileDialog, QFrame, QLabel, QScrollArea
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 # REMARK: last data row isn't correctly calculated
 
@@ -12,138 +14,107 @@ import pandas as pd
 warnings.simplefilter("ignore", UserWarning) 
 
 
-class ExcelTreeview:
+class ExcelTableView(QWidget):
     """ 
     GUI class showing dropdown for profile selection, 
-    sheet selection and treeview to display dataframe. 
+    sheet selection and table view to display dataframe. 
     """
-    def __init__(self, root, processor):
-        self.root = root
+    def __init__(self, processor):
+        super().__init__()
         self.processor = processor
-        self.root.title("Pfizer Automation Tool")
-        self.root.geometry("1000x800")  # It's important to define window size!
-
-        # Frame for UI elements.
-        self.frame = ttk.Frame(self.root)
-        self.frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
         
-        # Layout container for alignment of UI elements.
-        self.controls_frame = ttk.Frame(self.frame)
-        self.controls_frame.pack(anchor="w", pady=5)
+        self.setWindowTitle("Pfizer Automation Tool")
+        self.setGeometry(100, 100, 1000, 800)  # It's important to define window size!
+
+        # layout
+        main_layout = QVBoxLayout(self)
+        controls_layout = QHBoxLayout()
 
         # Dropdown menu for profile selection.
-        self.profile_var = tk.StringVar()  # no start-value
-        self.profile_dropdown = ttk.Combobox(
-            self.controls_frame, 
-            textvariable=self.profile_var, 
-            values=list(self.processor.profiles.keys()),
-            # Gives all possible profiles specified in the config file.
-            state="readonly"
-            )
-        self.profile_dropdown.grid(row=0, column=0, padx=5)
-        self.profile_dropdown.bind("<<ComboboxSelected>>", self.update_profile)
+        self.profile_dropdown = QComboBox(self)
+        self.profile_dropdown.addItems(list(self.processor.profiles.keys()))
+        self.profile_dropdown.currentTextChanged.connect(self.update_profile)
+        controls_layout.addWidget(QLabel("Select profile:"))
+        controls_layout.addWidget(self.profile_dropdown)
         
         # File browse button.
-        self.filepath_var = tk.StringVar()
-        self.file_button = ttk.Button(self.controls_frame, text="Browse", command=self.browse_file)
-        self.file_button.grid(row=0,column=1,padx=5)
+        self.file_button = QPushButton("Browse", self)
+        self.file_button.clicked.connect(self.browse_file)
+        controls_layout.addWidget(self.file_button)
 
         # Dropdown menu for sheet selection.
-        self.sheet_var = tk.StringVar()  # no start-value
-        self.sheet_dropdown = ttk.Combobox(
-            self.controls_frame, 
-            textvariable=self.sheet_var, 
-            state="readonly"
-            )
-        self.sheet_dropdown.grid(row=0,column=2,padx=5)
-        self.sheet_dropdown.bind("<<ComboboxSelected>>", self.update_sheet)
+        self.sheet_dropdown = QComboBox(self)
+        self.sheet_dropdown.currentTextChanged.connect(self.update_sheet)
+        controls_layout.addWidget(QLabel("Select sheet:"))
+        controls_layout.addWidget(self.sheet_dropdown)
         
-        # scrollbars
-        self.vsb = ttk.Scrollbar(self.frame, orient="vertical")
-        self.hsb = ttk.Scrollbar(self.frame, orient="horizontal")
+        main_layout.addLayout(controls_layout)
         
-        # treeview widget
-        self.tree = ttk.Treeview(
-            self.frame,
-            show="headings",
-            yscrollcommand=self.vsb.set,
-            xscrollcommand=self.hsb.set
-        )
-        # Link the scrollbars to the treeview.
-        self.vsb.config(command=self.tree.yview)
-        self.hsb.config(command=self.tree.xview)
+        # treeview widget (tableview in pyqt5)
+        self.table_view = QTableView(self)
+        self.table_model = QStandardItemModel(self)
+        self.table_view.setModel(self.table_model)
+        main_layout.addWidget(self.table_view)
 
-        # Set grid layout.
-        self.tree.pack(fill=tk.BOTH, expand=True)
-        self.vsb.pack(side=tk.RIGHT, fill=tk.Y)
-        self.hsb.pack(side=tk.BOTTOM, fill=tk.X)
-
-        # Show initial data in the treeview.
-        self.load_treeview()
+        # Show initial data in the table view.
+        self.load_tableview()
         
     def browse_file(self):
-        filepath = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
+        filepath, _ = QFileDialog.getOpenFileName(self, "Open Excel file", "", "Excel files (*.xlsx *.xls)")
+    
         if filepath:
             self.processor.set_filepath(filepath)
             self.update_profile()
         
-    def update_profile(self, event=None):
-        """ Update user profile and load correct data into treeview. """
-        new_profile = self.profile_var.get()
+    def update_profile(self):
+        """ Update user profile and load correct data into table view. """
+        new_profile = self.profile_dropdown.currentText()
         # Store currently selected sheet.
-        current_sheet = self.sheet_var.get()
+        current_sheet = self.sheet_dropdown.currentText()
         self.processor.set_profile(new_profile)
-        
         # Update sheet dropdown options based on selected profile.
         self.update_sheet_options(current_sheet)
-        
-        # Load excel file with new profile.
-        self.processor.load_excel()
-        # Load the treeview for the current or restored sheet.
-        self.load_treeview(self.sheet_var.get())
         
     def update_sheet_options(self, previous_sheet=None):
         """ Update the available sheet options in dropdown list according to current profile and try to keep the previous selection. """
         # Get the sheets for current user profile out of config file.
         available_sheets = self.processor.get_config_sheets()
-        self.sheet_dropdown['values'] = available_sheets
+        self.sheet_dropdown.clear()
+        self.sheet_dropdown.addItems(available_sheets)
         
         # Keep previously selected sheet open if it's still available, otherwise fall back to first available sheet.
         if previous_sheet in available_sheets:
-            self.sheet_var.set(previous_sheet)
+            self.sheet_dropdown.setCurrentText(previous_sheet)
         elif available_sheets:
-            self.sheet_var.set(available_sheets[0])
-        # else:
-        #     self.sheet_var.set("")
+            self.sheet_dropdown.setCurrentText(available_sheets[0])
             
         # Automatically load the selected sheet.
         self.update_sheet()
         
     def update_sheet(self, event=None):
-        """ Update the treeview with data from selected sheet. """
-        sheet_name = self.sheet_var.get()
-        self.load_treeview(sheet_name)
+        """ Update the table view with data from selected sheet. """
+        sheet_name = self.sheet_dropdown.currentText()
+        self.load_tableview(sheet_name)
         
-    def load_treeview(self, sheet_name=None):
-        """ Reload treeview with correct sheet, columns and data. """
-        # Delete the current treeview data.
-        self.tree.delete(*self.tree.get_children())
+    def load_tableview(self, sheet_name=None):
+        """ Reload table view with correct sheet, columns and data. """
+        # Delete the current table view data.
+        self.table_model.clear()
         
         if sheet_name is None:
             # By default take the current selected sheet.
-            sheet_name = self.sheet_var.get()
+            sheet_name = self.sheet_dropdown.currentText()
         
         # Get dataframe for selected sheet.
         df = self.processor.get_dataframe(sheet_name)
         if df is not None:
-            self.tree["columns"] = list(df.columns)
-            for col in df.columns:
-                self.tree.heading(col, text=col)
-                self.tree.column(col, width=100, anchor="w")
-                
-            # populate treeview
+            # Set headers.
+            self.table_model.setHorizontalHeaderLabels(list(df.columns))
+            
+            # Add rows to model
             for _, row in df.iterrows():
-                self.tree.insert("", "end", values=row.tolist())
+                row_items = [QStandardItem(str(cell)) for cell in row.tolist()]
+                self.table_model.appendRow(row_items)
         
         
 class ExcelProcessor:
@@ -227,9 +198,15 @@ class ExcelProcessor:
     
 
 
-config_file = "config.json"
-current_profile = "operator"  # Will later be set through GUI dropdown list.
-processor = ExcelProcessor(config_file, profile=current_profile)
+if __name__ == "__main__":
+    config_file = "config.json"
+    current_profile = "operator"  # Will later be set through GUI dropdown list.
+    processor = ExcelProcessor(config_file, profile=current_profile)
+    
+    app = QApplication(sys.argv)
+    window = ExcelTableView(processor)
+    window.show()
+    sys.exit(app.exec_())
 
 
 # I use these lines to print a list of all column names for a specific sheet in the right syntax, to be able to put it correctly in the config file.
@@ -238,8 +215,3 @@ processor = ExcelProcessor(config_file, profile=current_profile)
 
 # df_cp = processor.get_dataframe("Color Pictures")
 # print(list(df_cp.columns.values))
-
-
-root = tk.Tk()
-app = ExcelTreeview(root, processor)
-root.mainloop()
