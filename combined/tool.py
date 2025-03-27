@@ -23,30 +23,39 @@ class ExcelTreeview:
         self.root.title("Pfizer Automation Tool")
         self.root.geometry("1000x800")  # It's important to define window size!
 
-        # Frame for dropdown and treeview.
+        # Frame for UI elements.
         self.frame = ttk.Frame(self.root)
         self.frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        
+        # Layout container for alignment of UI elements.
+        self.controls_frame = ttk.Frame(self.frame)
+        self.controls_frame.pack(anchor="w", pady=5)
 
         # Dropdown menu for profile selection.
         self.profile_var = tk.StringVar()  # no start-value
         self.profile_dropdown = ttk.Combobox(
-            self.frame, 
+            self.controls_frame, 
             textvariable=self.profile_var, 
             values=list(self.processor.profiles.keys()),
-            # processor.profiles.keys() gives all possible profiles specified in the config file
+            # Gives all possible profiles specified in the config file.
             state="readonly"
             )
-        self.profile_dropdown.pack(pady=5)
+        self.profile_dropdown.grid(row=0, column=0, padx=5)
         self.profile_dropdown.bind("<<ComboboxSelected>>", self.update_profile)
+        
+        # File browse button.
+        self.filepath_var = tk.StringVar()
+        self.file_button = ttk.Button(self.controls_frame, text="Browse", command=self.browse_file)
+        self.file_button.grid(row=0,column=1,padx=5)
 
         # Dropdown menu for sheet selection.
         self.sheet_var = tk.StringVar()  # no start-value
         self.sheet_dropdown = ttk.Combobox(
-            self.frame, 
+            self.controls_frame, 
             textvariable=self.sheet_var, 
             state="readonly"
             )
-        self.sheet_dropdown.pack(pady=5)
+        self.sheet_dropdown.grid(row=0,column=2,padx=5)
         self.sheet_dropdown.bind("<<ComboboxSelected>>", self.update_sheet)
         
         # scrollbars
@@ -71,6 +80,12 @@ class ExcelTreeview:
 
         # Show initial data in the treeview.
         self.load_treeview()
+        
+    def browse_file(self):
+        filepath = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
+        if filepath:
+            self.processor.set_filepath(filepath)
+            self.update_profile()
         
     def update_profile(self, event=None):
         """ Update user profile and load correct data into treeview. """
@@ -142,20 +157,23 @@ class ExcelProcessor:
         # Dictionary containing all data {sheetname: DataFrame}.
         self.dataframes = {}
         self.profile = profile
-        self.load_excel()
+        self.filepath = None  # User always has to choose a file before tool works.
         
     def load_config(self, config_path):
         """ Load configuration parameters from JSON file. """
         with open(config_path, 'r', encoding="utf-8") as f:
             config = json.load(f)
         
-        self.filepath = config["file_path"]
         self.default_profile = config["default_profile"]
         self.headerrows = config["header_rows"]
         self.index_start = config["index_start"]
         self.columnnames = config["column_names"]
         self.profiles = config["profiles"]
         
+    def set_filepath(self, filepath):
+        self.filepath = filepath
+        self.load_excel()        
+    
     def get_config_sheets(self):
         """ Return list of available sheets for current profile. """
         available_sheets = []
@@ -173,6 +191,10 @@ class ExcelProcessor:
                 
     def load_excel(self):
         """ Load the Excel sheets into dataframes, with the specified header row per sheet and columns allowed depending on the indicated profile. """
+        # Don't try to load an Excel file when the file has not been selected yet.
+        if not self.filepath:
+            return
+        
         # Open the Excel-file.
         xls = pd.ExcelFile(self.filepath)
         
