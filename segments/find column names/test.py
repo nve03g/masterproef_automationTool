@@ -32,30 +32,31 @@ class ExcelProcessor:
         """ get specific sheet (DataFrame) """
         return self.dataframes.get(sheetname)
 
-file = "AlarmList_CU7000_B5_FREEZE.xlsx"
+file = "Visualisation&Commands_CU7000_CU7100_B4_FREEZE.xlsm"
 header_rows = {
     "Version control": 3,
-    "Alarmlist": 3,
-    "Color Pictures": 3,
+    "Bit info": 3,
+    "Bit commands": 3,
+    "Colour pictures Status": 3,
+    "Interlock": 3,
+    "Buttons": 3,
+    "Motor (6 bytes)": 3,
+    "Valve": 3,
+    "Motor (48 bytes)": 3,
+    "Input value": 3,
+    "Measurement": 3,
+    "Controller": 3,
+    "Output values": 3,
+    "Template history": 3
 }
-# column_names = {
-#     "Alarmlist": ['CRF / PCN', 'Version', 'PfizerNR', 'Alarmtext machine constructor (German)',
-#  'Alarmtext English', 'Dutch translation', 'Interlocks', 'Bypass', 'Stopmode',
-#  'Scada Alarmnr', 'Tagname', 'WORD number', 'bit in WORD', 'LAlm address',
-#  'PLC Data Type', 'PLC I/O', 'Class', 'PM67\nClass', 'VU-number', 'Picture',
-#  'Opkleuring\n(tags)', 'Color Picture', 'Lichtbalk\n(tekst)',
-#  'Lichtbalk (nummer)', 'Popup (tekst)', 'QSI', 'Alert\nmonitoring',
-#  'VQS reference', 'Hoorn / Buzzer', 'Special remarks', 'Pass / fail'],
-# }
 column_names = {}
 
 processor = ExcelProcessor(file, header_rows, column_names)
 processor.load_excel()
 
-sheetname = "Version control" # sheetname to test
-df = processor.get_dataframe(sheetname).drop(0)
-# Index aanpassen zodat deze start bij 5
-df.index = range(5, 5 + len(df))
+# sheet to test
+sheetname = "Template history"
+df = processor.get_dataframe(sheetname)
+
 print(f"column names for sheet '{sheetname}':\n")
 print(list(df.columns.values))
-# print(df.head())
