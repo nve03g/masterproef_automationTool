@@ -1,0 +1,622 @@
+{
+    "file_1": {
+        "filename": "AlarmList_CU7000_B5_FREEZE.xlsx",
+        "profile": {
+            "developer": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11", "Unnamed: 12"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Alarmlist": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Alarmtext machine constructor (German)", "Alarmtext English", "Dutch translation", "Interlocks", "Bypass", "Stopmode", "Scada Alarmnr", "Tagname", "WORD number", "bit in WORD", "LAlm address", "PLC Data Type", "PLC I/O", "Class", "PM67\nClass", "VU-number", "Picture", "Opkleuring\n(tags)", "Color Picture", "Lichtbalk\n(tekst)", "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring", "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Color Pictures": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            },
+            "supplier": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11", "Unnamed: 12"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Alarmlist": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Alarmtext machine constructor (German)", "Alarmtext English", "Dutch translation", "Interlocks", "Bypass", "Stopmode", "Scada Alarmnr", "Tagname", "WORD number", "bit in WORD", "LAlm address", "PLC Data Type", "PLC I/O", "Class", "PM67\nClass", "VU-number", "Picture", "Opkleuring\n(tags)", "Color Picture", "Lichtbalk\n(tekst)", "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring", "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Color Pictures": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            },
+            "operator": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11", "Unnamed: 12"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Alarmlist": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Alarmtext machine constructor (German)", "Alarmtext English", "Dutch translation", "Interlocks", "Bypass", "Stopmode", "Scada Alarmnr", "Tagname", "WORD number", "bit in WORD", "LAlm address", "PLC Data Type", "PLC I/O", "Class", "PM67\nClass", "VU-number", "Picture", "Opkleuring\n(tags)", "Color Picture", "Lichtbalk\n(tekst)", "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring", "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Color Pictures": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            }
+        }
+    },
+    "file_2": {
+        "filename": "DownloadList_CU7000_B2_FREEZE.xlsm",
+        "profile": {
+            "developer": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Download list": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"],
+                    "assigned_columns": []
+                },
+                "P5 parameters": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"],
+                    "assigned_columns": []
+                },
+                "StatusTags": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "PfizerNR", "Description (Optional)", "DB16 address", "symbolic", "DB16 Name"],
+                    "assigned_columns": []
+                },
+                "RMS generation settings": {
+                    "header_rows": 4,
+                    "index_start": 5,
+                    "column_names": ["Description", "Value", "comment"],
+                    "assigned_columns": []
+                },
+                "ComponentTypes": {
+                    "header_rows": 1,
+                    "index_start": 2,
+                    "column_names": ["Component", "Mnemonic", "Uniek", "Basis", "Override", "Sequence"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            },
+            "supplier": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Download list": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"],
+                    "assigned_columns": []
+                },
+                "P5 parameters": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"],
+                    "assigned_columns": []
+                },
+                "StatusTags": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "PfizerNR", "Description (Optional)", "DB16 address", "symbolic", "DB16 Name"],
+                    "assigned_columns": []
+                },
+                "RMS generation settings": {
+                    "header_rows": 4,
+                    "index_start": 5,
+                    "column_names": ["Description", "Value", "comment"],
+                    "assigned_columns": []
+                },
+                "ComponentTypes": {
+                    "header_rows": 1,
+                    "index_start": 2,
+                    "column_names": ["Component", "Mnemonic", "Uniek", "Basis", "Override", "Sequence"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            },
+            "operator": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Download list": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"],
+                    "assigned_columns": []
+                },
+                "P5 parameters": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"],
+                    "assigned_columns": []
+                },
+                "StatusTags": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "PfizerNR", "Description (Optional)", "DB16 address", "symbolic", "DB16 Name"],
+                    "assigned_columns": []
+                },
+                "RMS generation settings": {
+                    "header_rows": 4,
+                    "index_start": 5,
+                    "column_names": ["Description", "Value", "comment"],
+                    "assigned_columns": []
+                },
+                "ComponentTypes": {
+                    "header_rows": 1,
+                    "index_start": 2,
+                    "column_names": ["Component", "Mnemonic", "Uniek", "Basis", "Override", "Sequence"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            }
+        }
+    },
+    "file_3": {
+        "filename": "UploadList_CU7000_A5_FREEZE.xlsm",
+        "profile": {
+            "developer": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Upload list": {
+                    "header_rows": 2,
+                    "index_start": 3,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Description", "Translation", "Absolute", "Symbolic", "Type", "PLC Data Type", "UL/DL\nTag name ", "min", "max", "unit", "format", "Special remarks", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            },
+            "supplier": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Upload list": {
+                    "header_rows": 2,
+                    "index_start": 3,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Description", "Translation", "Absolute", "Symbolic", "Type", "PLC Data Type", "UL/DL\nTag name ", "min", "max", "unit", "format", "Special remarks", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            },
+            "operator": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Upload list": {
+                    "header_rows": 2,
+                    "index_start": 3,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Description", "Translation", "Absolute", "Symbolic", "Type", "PLC Data Type", "UL/DL\nTag name ", "min", "max", "unit", "format", "Special remarks", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            }
+        }
+    },
+    "file_4": {
+        "filename": "Visualisation&Commands_CU7000_CU7100_B4_FREEZE.xlsm",
+        "profile": {
+            "developer": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Bit info": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Function", "Absolute", "Symbolic", "Linked Interlock object (Tag)", "Class (MES/mode,…)", "Text", "WinCC Tagname", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Bit commands": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Function", "Absolute", "Symbolic", "Functionkey", "Passwordlevel", "ButtonText", "Tooltip", "WinCC Tagname", "Buttontype", "Special remarks", "Picture", "Local Logging", "Eventviewer Logging", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Colour pictures Status": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Description", "alarmnr.", "Motorstatus", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Interlock": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Linked object (Tag)", "Dutch Translation 1", "Dutch Translation 2", "Port Index", "Port Description \nMachine Contructor\n(Not used in SCADA)", "Port Description English", "Port Description \n(NL translation)", "Special remarks", "Picture", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Buttons": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "]", "Comment", "Behaviour / toggle", "Linked Interlock object", "POPC", "POPT", "BUTT", "ELOG", "LLOG", "LOGText", "LOGText.1", "BehaviourCode", "ELOG Type", "ButtonText (Dutch) [Use \\ for line breaks]", "ButtonText Alternate (Dutch)  [Use \\ for line breaks]", "ButtonFeedbackColor", "Tooltip", "PopupText", "PopupText Alternate", "Authorisation", "Functionkeys", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Motor (6 bytes)": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Valve": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "Pfizernr.", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Type", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Motor (48 bytes)": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Unit SP", "Unit PV", "Enable / Disable Alarm", "Format SP", "Format PV", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "SP Range Min", "SP Range Max", "PV Range Min", "PV Range Max", "Graph group picture (Faceplate)", "Graph SP", "Graph PV", "Graph Min SP", "Graph Max SP", "Graph Min PV", "Graph Max PV", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name SP", "HIST Tag name PV", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST Address SP", "HIST Address PV", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Input value": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "Pfizernr", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Passwordlevel", "Unit", "Format", "Range Min", "Range Max", "Type", "Signed", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Textlist options", "Logging", "Special remarks", "Picture", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Measurement": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable Alarm", "Unit", "Format", "Authorisation Overrule Faceplate", "Auth Alarm Overrule Guest1", "Auth Alarm Overrule Operator", "Auth Alarm Overrule Technieker 1", "Auth Alarm Overrule Technieker 2", "Auth Alarm Overrule Verantw. MachineSt.", "Auth Alarm Overrule Supervisor", "Auth Alarm Overrule PE", "Auth Alarm Overrule Developer", "Range Min", "Range Max", "Graph Scantime (Faceplate)", "Graph", "Graph Min", "Graph Max", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name", "HIST Scan time", "HIST GMP", "HIST Graphname", "Special remarks", "Picture", "Virtual Unit", "Pass/fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Controller": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Unit SP", "Unit PV", "Unit OUT", "Enable / Disable Alarm", "Format SP", "Format PV", "Format OUT", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSteller", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "SP Range Min", "SP Range Max", "PV Range Min", "PV Range Max", "OUT Range Min", "OUT Range Max", "Graph Scantime (Faceplate)", "Graph SP", "Graph PV", "Graph OUT", "Graph Min SP", "Graph Max SP", "Graph Min PV", "Graph Max PV", "Graph Min OUT", "Graph Max OUT", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name SP", "HIST Tag name PV", "HIST Tag name OUT", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST Address SP", "HIST Address PV", "HIST Address OUT", "Special remarks", "Picture", "Eventviewer buttons", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Output values": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation", "Type", "Signed", "Textlist options", "Unit", "Format", "Range Min", "Range max", "P5 param Group", "P5 param Sequence", "initial value", "Meet aan/uit", "Graph Y/N", "Graph Min", "Graph Max", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST type", "Special remarks", "Picture", "Virtual Unit", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            },
+            "supplier": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Bit info": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Function", "Absolute", "Symbolic", "Linked Interlock object (Tag)", "Class (MES/mode,…)", "Text", "WinCC Tagname", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Bit commands": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Function", "Absolute", "Symbolic", "Functionkey", "Passwordlevel", "ButtonText", "Tooltip", "WinCC Tagname", "Buttontype", "Special remarks", "Picture", "Local Logging", "Eventviewer Logging", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Colour pictures Status": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Description", "alarmnr.", "Motorstatus", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Interlock": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Linked object (Tag)", "Dutch Translation 1", "Dutch Translation 2", "Port Index", "Port Description \nMachine Contructor\n(Not used in SCADA)", "Port Description English", "Port Description \n(NL translation)", "Special remarks", "Picture", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Buttons": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "]", "Comment", "Behaviour / toggle", "Linked Interlock object", "POPC", "POPT", "BUTT", "ELOG", "LLOG", "LOGText", "LOGText.1", "BehaviourCode", "ELOG Type", "ButtonText (Dutch) [Use \\ for line breaks]", "ButtonText Alternate (Dutch)  [Use \\ for line breaks]", "ButtonFeedbackColor", "Tooltip", "PopupText", "PopupText Alternate", "Authorisation", "Functionkeys", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Motor (6 bytes)": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Valve": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "Pfizernr.", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Type", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Motor (48 bytes)": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Unit SP", "Unit PV", "Enable / Disable Alarm", "Format SP", "Format PV", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "SP Range Min", "SP Range Max", "PV Range Min", "PV Range Max", "Graph group picture (Faceplate)", "Graph SP", "Graph PV", "Graph Min SP", "Graph Max SP", "Graph Min PV", "Graph Max PV", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name SP", "HIST Tag name PV", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST Address SP", "HIST Address PV", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Input value": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "Pfizernr", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Passwordlevel", "Unit", "Format", "Range Min", "Range Max", "Type", "Signed", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Textlist options", "Logging", "Special remarks", "Picture", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Measurement": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable Alarm", "Unit", "Format", "Authorisation Overrule Faceplate", "Auth Alarm Overrule Guest1", "Auth Alarm Overrule Operator", "Auth Alarm Overrule Technieker 1", "Auth Alarm Overrule Technieker 2", "Auth Alarm Overrule Verantw. MachineSt.", "Auth Alarm Overrule Supervisor", "Auth Alarm Overrule PE", "Auth Alarm Overrule Developer", "Range Min", "Range Max", "Graph Scantime (Faceplate)", "Graph", "Graph Min", "Graph Max", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name", "HIST Scan time", "HIST GMP", "HIST Graphname", "Special remarks", "Picture", "Virtual Unit", "Pass/fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Controller": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Unit SP", "Unit PV", "Unit OUT", "Enable / Disable Alarm", "Format SP", "Format PV", "Format OUT", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSteller", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "SP Range Min", "SP Range Max", "PV Range Min", "PV Range Max", "OUT Range Min", "OUT Range Max", "Graph Scantime (Faceplate)", "Graph SP", "Graph PV", "Graph OUT", "Graph Min SP", "Graph Max SP", "Graph Min PV", "Graph Max PV", "Graph Min OUT", "Graph Max OUT", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name SP", "HIST Tag name PV", "HIST Tag name OUT", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST Address SP", "HIST Address PV", "HIST Address OUT", "Special remarks", "Picture", "Eventviewer buttons", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Output values": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation", "Type", "Signed", "Textlist options", "Unit", "Format", "Range Min", "Range max", "P5 param Group", "P5 param Sequence", "initial value", "Meet aan/uit", "Graph Y/N", "Graph Min", "Graph Max", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST type", "Special remarks", "Picture", "Virtual Unit", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            },
+            "operator": {
+                "Version control": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"],
+                    "assigned_columns": []
+                },
+                "General info": {
+                    "header_rows": 0,
+                    "index_start": 0,
+                    "column_names": [],
+                    "assigned_columns": []
+                },
+                "Bit info": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Function", "Absolute", "Symbolic", "Linked Interlock object (Tag)", "Class (MES/mode,…)", "Text", "WinCC Tagname", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Bit commands": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Function", "Absolute", "Symbolic", "Functionkey", "Passwordlevel", "ButtonText", "Tooltip", "WinCC Tagname", "Buttontype", "Special remarks", "Picture", "Local Logging", "Eventviewer Logging", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Colour pictures Status": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Description", "alarmnr.", "Motorstatus", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Interlock": {
+                    "header_rows": 3,
+                    "index_start": 5,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Linked object (Tag)", "Dutch Translation 1", "Dutch Translation 2", "Port Index", "Port Description \nMachine Contructor\n(Not used in SCADA)", "Port Description English", "Port Description \n(NL translation)", "Special remarks", "Picture", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Buttons": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "]", "Comment", "Behaviour / toggle", "Linked Interlock object", "POPC", "POPT", "BUTT", "ELOG", "LLOG", "LOGText", "LOGText.1", "BehaviourCode", "ELOG Type", "ButtonText (Dutch) [Use \\ for line breaks]", "ButtonText Alternate (Dutch)  [Use \\ for line breaks]", "ButtonFeedbackColor", "Tooltip", "PopupText", "PopupText Alternate", "Authorisation", "Functionkeys", "Special remarks", "Picture", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Motor (6 bytes)": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Valve": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "Pfizernr.", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Type", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Motor (48 bytes)": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Unit SP", "Unit PV", "Enable / Disable Alarm", "Format SP", "Format PV", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "SP Range Min", "SP Range Max", "PV Range Min", "PV Range Max", "Graph group picture (Faceplate)", "Graph SP", "Graph PV", "Graph Min SP", "Graph Max SP", "Graph Min PV", "Graph Max PV", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name SP", "HIST Tag name PV", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST Address SP", "HIST Address PV", "Special remarks", "Picture", "Eventviewer buttons", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Input value": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "Pfizernr", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Passwordlevel", "Unit", "Format", "Range Min", "Range Max", "Type", "Signed", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSt.", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "Textlist options", "Logging", "Special remarks", "Picture", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Measurement": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable Alarm", "Unit", "Format", "Authorisation Overrule Faceplate", "Auth Alarm Overrule Guest1", "Auth Alarm Overrule Operator", "Auth Alarm Overrule Technieker 1", "Auth Alarm Overrule Technieker 2", "Auth Alarm Overrule Verantw. MachineSt.", "Auth Alarm Overrule Supervisor", "Auth Alarm Overrule PE", "Auth Alarm Overrule Developer", "Range Min", "Range Max", "Graph Scantime (Faceplate)", "Graph", "Graph Min", "Graph Max", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name", "HIST Scan time", "HIST GMP", "HIST Graphname", "Special remarks", "Picture", "Virtual Unit", "Pass/fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Controller": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation Line 1", "Dutch translation Line 2", "Enable / Disable", "Unit SP", "Unit PV", "Unit OUT", "Enable / Disable Alarm", "Format SP", "Format PV", "Format OUT", "Authorisation Overrule Faceplate", "Auth Overrule Guest1", "Auth Overrule Operator", "Auth Overrule Technieker 1", "Auth Overrule Technieker 2", "Auth Overrule Verantw. MachineSteller", "Auth Overrule Supervisor", "Auth Overrule PE", "Auth Overrule Developer", "SP Range Min", "SP Range Max", "PV Range Min", "PV Range Max", "OUT Range Min", "OUT Range Max", "Graph Scantime (Faceplate)", "Graph SP", "Graph PV", "Graph OUT", "Graph Min SP", "Graph Max SP", "Graph Min PV", "Graph Max PV", "Graph Min OUT", "Graph Max OUT", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name SP", "HIST Tag name PV", "HIST Tag name OUT", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST Address SP", "HIST Address PV", "HIST Address OUT", "Special remarks", "Picture", "Eventviewer buttons", "Virtual Unit", "Pass / fail"],
+                    "assigned_columns": []
+                },
+                "Output values": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["CRF / PCN", "Version", "PfizerNR", "Tag", "Absolute", "Symbolic", "Comment", "Dutch translation", "Type", "Signed", "Textlist options", "Unit", "Format", "Range Min", "Range max", "P5 param Group", "P5 param Sequence", "initial value", "Meet aan/uit", "Graph Y/N", "Graph Min", "Graph Max", "Graph group picture", "Graph Scantime", "Graph Timerange", "HIST Tag name", "HIST Scan time", "HIST GMP", "HIST Graphname", "HIST type", "Special remarks", "Picture", "Virtual Unit", "Pass / fail", "German translation"],
+                    "assigned_columns": []
+                },
+                "Template history": {
+                    "header_rows": 3,
+                    "index_start": 4,
+                    "column_names": ["Version", "Initiator", "Date", "Description"],
+                    "assigned_columns": []
+                }
+            }
+        }
+    }
+}
