@@ -13,11 +13,11 @@ warnings.simplefilter("ignore", UserWarning)
 
 
 class ExcelTreeview:
+    """ 
+    GUI class showing dropdown for profile selection, 
+    sheet selection and treeview to display dataframe. 
+    """
     def __init__(self, root, processor):
-        """ 
-        GUI class showing dropdown for profile selection, 
-        sheet selection and treeview to display dataframe. 
-        """
         self.root = root
         self.processor = processor
         self.root.title("Pfizer Automation Tool")
@@ -121,12 +121,12 @@ class ExcelTreeview:
         
         
 class ExcelProcessor:
+    """
+    initialize Excel file processor
+    - config_path : str, path to JSON config file
+    - profile : str, huidige hardcoded profielaanwijzing (supplier, developer, operator)
+    """
     def __init__(self, config_path, profile):
-        """
-        initialize Excel file processor
-        - config_path : str, path to JSON config file
-        - profile : str, huidige hardcoded profielaanwijzing (supplier, developer, operator)
-        """
         self.load_config(config_path)
         # Dictionary containing all data {sheetname: DataFrame}.
         self.dataframes = {}
