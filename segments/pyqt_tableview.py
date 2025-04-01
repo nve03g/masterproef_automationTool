@@ -1,4 +1,5 @@
 import sys
+import json
 import pandas as pd
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView, QVBoxLayout, QPushButton, QWidget, QFileDialog, QComboBox
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
@@ -38,22 +39,33 @@ class ExcelEditor(QMainWindow):
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
+        
+        self.load_config()
+    
+    def load_config(self):
+        try:
+            with open("config.json", "r") as file:
+                self.config = json.load(file)
+        except Exception as e:
+            print(f"Fout bij het laden van config.json: {e}")
+            self.config = {"profiles": []}
     
     def browse_file(self):
-        filepath, _ = QFileDialog.getOpenFileName(self, "Selecteer een bestand", "", "Excel bestanden (*.xlsx *.xls)")
+        filepath, _ = QFileDialog.getOpenFileName(self, "Selecteer een bestand", "", "Excel bestanden (*.xlsx *.xls *.xlsm)")
         
         if filepath:
             self.load_excel(filepath)
             self.load_dropdown_data(filepath)
     
     def load_excel(self, filepath):
-        self.df = pd.read_excel(filepath)
-        self.model = QStandardItemModel(len(self.df), len(self.df.columns))
-        self.model.setHorizontalHeaderLabels(self.df.columns)
+        self.df = pd.read_excel(filepath, sheet_name=None)  # Lees alle sheets in
+        first_sheet = list(self.df.keys())[0]  # Standaard de eerste sheet tonen
+        self.model = QStandardItemModel(len(self.df[first_sheet]), len(self.df[first_sheet].columns))
+        self.model.setHorizontalHeaderLabels(self.df[first_sheet].columns)
         
-        for row in range(len(self.df)):
-            for col in range(len(self.df.columns)):
-                item = QStandardItem(str(self.df.iloc[row, col]))
+        for row in range(len(self.df[first_sheet])):
+            for col in range(len(self.df[first_sheet].columns)):
+                item = QStandardItem(str(self.df[first_sheet].iloc[row, col]))
                 self.model.setItem(row, col, item)
         
         self.table_view.setModel(self.model)
@@ -62,25 +74,26 @@ class ExcelEditor(QMainWindow):
         self.dropdown2.setVisible(True)
     
     def load_dropdown_data(self, filepath):
-        # Voorbeeld data (uiteindelijk te laden uit config.json)
-        example_data_1 = ["Optie 1", "Optie 2", "Optie 3"]
-        example_data_2 = ["Keuze A", "Keuze B", "Keuze C"]
-        
+        # Laad profielen uit config.json
         self.dropdown1.clear()
-        self.dropdown2.clear()
+        self.dropdown1.addItems(self.config.get("profiles", []))
         
-        self.dropdown1.addItems(example_data_1)
-        self.dropdown2.addItems(example_data_2)
+        # Laad sheetnamen uit het geladen Excel-bestand
+        self.dropdown2.clear()
+        self.dropdown2.addItems(self.df.keys())
     
     def save_file(self):
         if self.df is not None:
-            for row in range(len(self.df)):
-                for col in range(len(self.df.columns)):
-                    self.df.iloc[row, col] = self.model.item(row, col).text()
+            current_sheet = self.dropdown2.currentText()
+            for row in range(len(self.df[current_sheet])):
+                for col in range(len(self.df[current_sheet].columns)):
+                    self.df[current_sheet].iloc[row, col] = self.model.item(row, col).text()
             
             save_path, _ = QFileDialog.getSaveFileName(self, "Opslaan als", "", "Excel bestanden (*.xlsx)")
             if save_path:
-                self.df.to_excel(save_path, index=False)
+                with pd.ExcelWriter(save_path) as writer:
+                    for sheet_name, sheet_data in self.df.items():
+                        sheet_data.to_excel(writer, sheet_name=sheet_name, index=False)
                 print(f"Bestand opgeslagen als '{save_path}'")
 
 if __name__ == "__main__":
