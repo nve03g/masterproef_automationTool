@@ -1,5 +1,6 @@
 import sys
 import json
+import os
 import pandas as pd
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView, QVBoxLayout, QPushButton, QWidget, QFileDialog, QComboBox
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
@@ -24,15 +25,17 @@ class ExcelEditor(QMainWindow):
         self.save_button.clicked.connect(self.save_file)
         self.save_button.setEnabled(False)  # Alleen activeren als er een bestand geladen is
         
-        self.dropdown1 = QComboBox(self)
-        self.dropdown2 = QComboBox(self)
-        self.dropdown1.setVisible(False)
-        self.dropdown2.setVisible(False)
+        self.profile_dropdown = QComboBox(self)
+        self.profile_dropdown.setVisible(False)
+        
+        self.sheet_dropdown = QComboBox(self)
+        self.sheet_dropdown.setVisible(False)
+        self.sheet_dropdown.currentIndexChanged.connect(self.update_table_view)
         
         layout = QVBoxLayout()
         layout.addWidget(self.load_button)
-        layout.addWidget(self.dropdown1)
-        layout.addWidget(self.dropdown2)
+        layout.addWidget(self.profile_dropdown)
+        layout.addWidget(self.sheet_dropdown)
         layout.addWidget(self.table_view)
         layout.addWidget(self.save_button)
         
@@ -54,37 +57,47 @@ class ExcelEditor(QMainWindow):
         filepath, _ = QFileDialog.getOpenFileName(self, "Selecteer een bestand", "", "Excel bestanden (*.xlsx *.xls *.xlsm)")
         
         if filepath:
+            self.current_file = os.path.basename(filepath)
             self.load_excel(filepath)
             self.load_dropdown_data(filepath)
     
     def load_excel(self, filepath):
         self.df = pd.read_excel(filepath, sheet_name=None)  # Lees alle sheets in
-        first_sheet = list(self.df.keys())[0]  # Standaard de eerste sheet tonen
-        self.model = QStandardItemModel(len(self.df[first_sheet]), len(self.df[first_sheet].columns))
-        self.model.setHorizontalHeaderLabels(self.df[first_sheet].columns)
-        
-        for row in range(len(self.df[first_sheet])):
-            for col in range(len(self.df[first_sheet].columns)):
-                item = QStandardItem(str(self.df[first_sheet].iloc[row, col]))
-                self.model.setItem(row, col, item)
-        
-        self.table_view.setModel(self.model)
+        self.all_sheets = list(self.df.keys())
+        self.sheet_dropdown.clear()
+        self.sheet_dropdown.addItems(self.all_sheets)
+        self.profile_dropdown.setVisible(True)
+        self.sheet_dropdown.setVisible(True)
+        self.sheet_dropdown.setCurrentIndex(0)
+        self.update_table_view()
         self.save_button.setEnabled(True)
-        self.dropdown1.setVisible(True)
-        self.dropdown2.setVisible(True)
-    
+        
+    def update_table_view(self):
+        selected_sheet = self.sheet_dropdown.currentText()
+        if selected_sheet and self.df:
+            sheet_data = self.df[selected_sheet]
+            self.model = QStandardItemModel(len(sheet_data), len(sheet_data.columns))
+            self.model.setHorizontalHeaderLabels(sheet_data.columns)
+            
+            for row in range(len(sheet_data)):
+                for col in range(len(sheet_data.columns)):
+                    item = QStandardItem(str(sheet_data.iloc[row, col]))
+                    self.model.setItem(row, col, item)
+            
+            self.table_view.setModel(self.model)
+            
     def load_dropdown_data(self, filepath):
         # Laad profielen uit config.json
-        self.dropdown1.clear()
-        self.dropdown1.addItems(self.config.get("profiles", []))
+        self.profile_dropdown.clear()
+        self.profile_dropdown.addItems(self.config.get("profiles", []))
         
-        # Laad sheetnamen uit het geladen Excel-bestand
-        self.dropdown2.clear()
-        self.dropdown2.addItems(self.df.keys())
+        # # Laad sheetnamen uit het geladen Excel-bestand
+        # self.sheet_dropdown.clear()
+        # self.sheet_dropdown.addItems(self.df.keys())
     
     def save_file(self):
         if self.df is not None:
-            current_sheet = self.dropdown2.currentText()
+            current_sheet = self.sheet_dropdown.currentText()
             for row in range(len(self.df[current_sheet])):
                 for col in range(len(self.df[current_sheet].columns)):
                     self.df[current_sheet].iloc[row, col] = self.model.item(row, col).text()
