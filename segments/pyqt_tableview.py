@@ -47,10 +47,10 @@ class ExcelEditor(QMainWindow):
     
     def load_config(self):
         try:
-            with open("config.json", "r") as file:
+            with open("pyqt_tableview_config.json", "r") as file:
                 self.config = json.load(file)
         except Exception as e:
-            print(f"Fout bij het laden van config.json: {e}")
+            print(f"Fout bij het laden van pyqt_tableview_config.json: {e}")
             self.config = {"profiles": []}
     
     def browse_file(self):
@@ -87,7 +87,7 @@ class ExcelEditor(QMainWindow):
             self.table_view.setModel(self.model)
             
     def load_dropdown_data(self, filepath):
-        # Laad profielen uit config.json
+        # Laad profielen uit pyqt_tableview_config.json
         self.profile_dropdown.clear()
         self.profile_dropdown.addItems(self.config.get("profiles", []))
         
