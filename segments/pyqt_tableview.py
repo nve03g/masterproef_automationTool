@@ -1,6 +1,6 @@
 import sys
 import pandas as pd
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView, QVBoxLayout, QPushButton, QWidget, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView, QVBoxLayout, QPushButton, QWidget, QFileDialog, QComboBox
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 class ExcelEditor(QMainWindow):
@@ -23,9 +23,16 @@ class ExcelEditor(QMainWindow):
         self.save_button.clicked.connect(self.save_file)
         self.save_button.setEnabled(False)  # Alleen activeren als er een bestand geladen is
         
+        self.dropdown1 = QComboBox(self)
+        self.dropdown2 = QComboBox(self)
+        self.dropdown1.setVisible(False)
+        self.dropdown2.setVisible(False)
+        
         layout = QVBoxLayout()
         layout.addWidget(self.load_button)
         layout.addWidget(self.table_view)
+        layout.addWidget(self.dropdown1)
+        layout.addWidget(self.dropdown2)
         layout.addWidget(self.save_button)
         
         container = QWidget()
@@ -33,7 +40,7 @@ class ExcelEditor(QMainWindow):
         self.setCentralWidget(container)
     
     def browse_file(self):
-        filepath, _ = QFileDialog.getOpenFileName(self, "Selecteer een bestand", "", "Excel bestanden (*.xlsx *.xls *.xlsm)")
+        filepath, _ = QFileDialog.getOpenFileName(self, "Selecteer een bestand", "", "Excel bestanden (*.xlsx *.xls)")
         
         if filepath:
             self.load_excel(filepath)
@@ -50,6 +57,8 @@ class ExcelEditor(QMainWindow):
         
         self.table_view.setModel(self.model)
         self.save_button.setEnabled(True)
+        self.dropdown1.setVisible(True)
+        self.dropdown2.setVisible(True)
     
     def save_file(self):
         if self.df is not None:
