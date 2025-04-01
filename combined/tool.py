@@ -1,11 +1,26 @@
+import os
 import sys
 import json
+import logging
 import warnings
 import pandas as pd
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QPushButton, QTableView, QFileDialog, QLabel
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 # REMARK: last data row isn't correctly calculated
+
+# Log errors in logfile
+logging.basicConfig(
+    filename="error_log.txt",
+    level=logging.ERROR,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+# Extra: log fouten ook naar de terminal
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.ERROR)
+console_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+logging.getLogger().addHandler(console_handler)
 
 # We get a warning that openpyxl no longer supports dropdown lists in Excel, 
 # but that's not a problem because we’re performing that check 
@@ -179,6 +194,13 @@ class ExcelProcessor:
                     }
                 else:
                     self.profiles[filename][profile] = access
+                
+    def set_excel_filepath(self, excel_path):
+        self.excel_path = excel_path
+        try:
+            self.load_excel()        
+        except Exception as e:
+            logging.exception(f"Error loading Excel file: {self.excel_path}")
     
     def get_config_sheets(self):
         """ Return list of available sheets for current profile. """
@@ -220,6 +242,7 @@ class ExcelProcessor:
         
         filename = os.path.basename(self.excel_path)
         
+        try:
             if filename not in self.files:
                 print(f"Warning: {filename} is not in the config.")
             
@@ -255,6 +278,10 @@ class ExcelProcessor:
                         
                     self.dataframes[sheet] = df
                 else:
+                    logging.warning(f"Warning: {sheet} not found in {self.excel_path}.")
+            
+        except Exception as e:
+            logging.exception(f"Error loading Excel file: {self.excel_path}")
         
     def get_dataframe(self, sheetname):
         """ Get a specific sheet (DataFrame). """
@@ -266,12 +293,15 @@ if __name__ == "__main__":
     config_file = "new_config_V2.json"
     current_profile = "operator"  # Will later be set through GUI dropdown list.
     processor = ExcelProcessor(config_file, profile=current_profile)
-    
-    app = QApplication(sys.argv)
-    window = ExcelTableView(processor)
-    window.show()
-    sys.exit(app.exec_())
+        
+    try:
+        app = QApplication(sys.argv)
+        window = ExcelTableView(processor)
+        window.show()
+        sys.exit(app.exec_())
 
+    except Exception as e:
+        logging.exception("Unexpected error in the GUI.")
 
 # I use these lines to print a list of all column names for a specific sheet in the right syntax, to be able to put it correctly in the config file.
 # df_alarmlist = processor.get_dataframe("Alarmlist")
