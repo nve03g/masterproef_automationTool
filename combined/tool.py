@@ -262,6 +262,7 @@ class ExcelProcessor:
                         # allowed_columns = self.profiles[self.profile][sheet]
                         allowed_columns = self.profiles[filename][self.profile].get(sheet, [])
                         valid_columns = [col for col in allowed_columns if col in df.columns]
+                        # TODO: melding welke kolommen niet bestaan in logfile
                     
                     df = df[valid_columns]
                         
