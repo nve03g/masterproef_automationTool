@@ -30,9 +30,9 @@ class ExcelEditor(QMainWindow):
         
         layout = QVBoxLayout()
         layout.addWidget(self.load_button)
-        layout.addWidget(self.table_view)
         layout.addWidget(self.dropdown1)
         layout.addWidget(self.dropdown2)
+        layout.addWidget(self.table_view)
         layout.addWidget(self.save_button)
         
         container = QWidget()
@@ -44,6 +44,7 @@ class ExcelEditor(QMainWindow):
         
         if filepath:
             self.load_excel(filepath)
+            self.load_dropdown_data(filepath)
     
     def load_excel(self, filepath):
         self.df = pd.read_excel(filepath)
@@ -59,6 +60,17 @@ class ExcelEditor(QMainWindow):
         self.save_button.setEnabled(True)
         self.dropdown1.setVisible(True)
         self.dropdown2.setVisible(True)
+    
+    def load_dropdown_data(self, filepath):
+        # Voorbeeld data (uiteindelijk te laden uit config.json)
+        example_data_1 = ["Optie 1", "Optie 2", "Optie 3"]
+        example_data_2 = ["Keuze A", "Keuze B", "Keuze C"]
+        
+        self.dropdown1.clear()
+        self.dropdown2.clear()
+        
+        self.dropdown1.addItems(example_data_1)
+        self.dropdown2.addItems(example_data_2)
     
     def save_file(self):
         if self.df is not None:
