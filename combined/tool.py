@@ -155,11 +155,17 @@ class ExcelProcessor:
     - profile : str, huidige hardcoded profielaanwijzing (supplier, developer, operator)
     """
     def __init__(self, config_path, profile):
-        self.load_config(config_path)
         # Dictionary containing all data {sheetname: DataFrame}.
         self.dataframes = {}
         # self.profile = profile
         self.excel_path = None  # User always has to choose a file before tool works.
+        
+        self.headerrows = {}
+        self.index_start = {}
+        self.columnnames = {}
+        self.profiles = {}
+        
+        self.load_config(config_path)
         
     def load_config(self, config_path):
         """ Load configuration parameters from JSON file. """
@@ -169,11 +175,6 @@ class ExcelProcessor:
         self.default_profile = config["default_profile"]
         self.files = config["files"]
         
-        self.headerrows = {}
-        self.index_start = {}
-        self.columnnames = {}
-        self.profiles = {}
-        
         # Loop over all files in the config file.
         for filename, file_config in self.files.items():
             self.headerrows[filename] = {}
@@ -182,7 +183,8 @@ class ExcelProcessor:
             self.profiles[filename] = {}
             
             for sheetname, sheet_config in file_config["sheets"].items():
-                self.headerrows[filename][sheetname] = sheet_config["header_row"]
+                self.headerrows[filename] = {sheetname: sheet_config["header_row"]}
+                # self.headerrows[filename][sheetname] = sheet_config["header_row"]
                 self.index_start[filename][sheetname] = sheet_config["index_start"]
                 self.columnnames[filename][sheetname] = sheet_config["columns"]
                 
@@ -227,13 +229,13 @@ class ExcelProcessor:
         return list(self.profiles[filename][self.profile].keys())
         
     def set_profile(self, profile):
-        # """ Set active profile (OR default profile). """
-        # if profile not in self.profiles:
-        #     self.profile = self.default_profile
-        # else:
-        #     self.profile = profile
+        """ Set active profile (OR default profile). """
+        if profile not in self.profiles:
+            self.profile = self.default_profile
+        else:
+            self.profile = profile
         """ Set the active profile for data access. """
-        self.profile = profile
+        # self.profile = profile
                 
     def load_excel(self):
         """ Load the Excel sheets into dataframes, with the specified header row per sheet and columns allowed depending on the indicated profile. """
@@ -257,7 +259,7 @@ class ExcelProcessor:
                     
                     # Only use profile-assigned columns.
                     # Controleer of het profiel 'ALL' mag zien (alle kolommen, dus admin profiel).
-                    if self.profiles[self.profile] == "ALL":
+                    if self.profiles[self.profile.value()] == "ALL":
                         valid_columns = df.columns.tolist()  # Neem alle kolommen, dus niet nodig om alle kolommen in config te zetten dan?
                     else:
                         # allowed_columns = self.profiles[self.profile][sheet]
@@ -276,7 +278,7 @@ class ExcelProcessor:
                             df = df.drop([i for i in range(index_start-header_row-1)])
                         
                         # Adjust indices to match Excel row indeces.
-                        df.index = range(index_start, index_start + len(df))                                 
+                        df.index = range(index_start, index_start + len(df))    # TODO: delete before final use                             
                         
                     self.dataframes[sheet] = df
                 else:
