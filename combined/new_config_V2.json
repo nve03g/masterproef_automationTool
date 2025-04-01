@@ -1,0 +1,182 @@
+{
+    "default_profile": "developer",
+    "files": {
+        "AlarmList_CU7000_B5_FREEZE.xlsx": {
+            "sheets": {
+                "Version control": {
+                    "header_row": 3,
+                    "index_start": 5,
+                    "columns": [
+                        "Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11", "Unnamed: 12"
+                    ]
+                },
+                "General info": {
+                    "header_row": 0,
+                    "index_start": 0,
+                    "columns": []
+                },
+                "Alarmlist": {
+                    "header_row": 3,
+                    "index_start": 5,
+                    "columns": [
+                        "CRF / PCN", "Version", "PfizerNR", "Alarmtext machine constructor (German)",
+                        "Alarmtext English", "Dutch translation", "Interlocks", "Bypass", "Stopmode",
+                        "Scada Alarmnr", "Tagname", "WORD number", "bit in WORD", "LAlm address",
+                        "PLC Data Type", "PLC I/O", "Class", "PM67\nClass", "VU-number", "Picture",
+                        "Opkleuring\n(tags)", "Color Picture", "Lichtbalk\n(tekst)",
+                        "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring",
+                        "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"
+                    ]
+                },
+                "Color Pictures": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": [
+                        "CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"
+                    ]
+                },
+                "Template history": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["Version", "Initiator", "Date", "Description"]
+                }
+            },
+            "profiles": {
+                "supplier": {
+                    "Alarmlist": [
+                        "Alarmtext machine constructor (German)", "Alarmtext English", "Dutch translation",
+                        "Interlocks", "Bypass", "Stopmode", "Class", "PM67\nClass", "Hoorn / Buzzer", "Special remarks"
+                    ],
+                    "Color Pictures": [
+                        "Description", "Object type", "Special remarks"
+                    ]
+                },
+                "developer": {
+                    "Alarmlist": [
+                        "CRF / PCN", "Version", "PfizerNR", "Alarmtext machine constructor (German)",
+                        "Alarmtext English", "Dutch translation", "Interlocks", "Bypass", "Stopmode",
+                        "Scada Alarmnr", "Tagname", "WORD number", "bit in WORD", "LAlm address",
+                        "PLC Data Type", "PLC I/O", "Class", "PM67\nClass", "VU-number", "Picture",
+                        "Opkleuring\n(tags)", "Color Picture", "Lichtbalk\n(tekst)",
+                        "Lichtbalk (nummer)", "Popup (tekst)", "QSI", "Alert\nmonitoring",
+                        "VQS reference", "Hoorn / Buzzer", "Special remarks", "Pass / fail"
+                    ],
+                    "Color Pictures": [
+                        "CRF / PCN", "Version", "PfizerNR", "Tag", "SCADA Intern", "Description", "Object type", "TAG Object status", "Special remarks", "Picture", "Pass / fail"
+                    ]
+                },
+                "operator": {
+                    "Alarmlist": [
+                        "Scada Alarmnr", "Tagname", "LAlm address", "PLC Data Type", "PLC I/O", "VU-number",
+                        "Opkleuring\n(tags)", "Popup (tekst)", "QSI", "Alert\nmonitoring",
+                        "VQS reference", "Pass / fail"
+                    ],
+                    "Color Pictures": [
+                        "PfizerNR", "Tag", "SCADA Intern", "TAG Object status", "Pass / fail"
+                    ]
+                },
+                "admin": "ALL"
+            }
+        },
+        "DownloadList_CU7000_B2_FREEZE.xlsm": {
+            "sheets": {
+                "Version control": {
+                    "header_row": 3,
+                    "index_start": 5,
+                    "columns": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"]
+                },
+                "General info": {
+                    "header_row": 0,
+                    "index_start": 0,
+                    "columns": []
+                },
+                "Download list": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"]
+                },
+                "P5 parameters": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"]
+                },
+                "StatusTags": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["Version", "PfizerNR", "Description (Optional)", "DB16 address", "symbolic", "DB16 Name"]
+                },
+                "RMS generation settings": {
+                    "header_row": 4,
+                    "index_start": 5,
+                    "columns": ["Description", "Value", "comment"]
+                },
+                "ComponentTypes": {
+                    "header_row": 1,
+                    "index_start": 2,
+                    "columns": ["Component", "Mnemonic", "Uniek", "Basis", "Override", "Sequence"]
+                },
+                "Template history": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["Version", "Initiator", "Date", "Description"]
+                }
+            },
+            "profiles": {
+                "supplier": {},
+                "developer": {},
+                "operator": {},
+                "admin": "ALL"
+            }
+        },
+        "test": {
+            "sheets": {
+                "Version control": {
+                    "header_row": 3,
+                    "index_start": 5,
+                    "columns": ["Document\nVersion", "Initiator", "Date", "Description", "CRF / PCN number", "WO number\n(for EV)", "Discipline in scope?", "Unnamed: 7", "Unnamed: 8", "(Yes/No/Future)", "Unnamed: 10", "Unnamed: 11"]
+                },
+                "General info": {
+                    "header_row": 0,
+                    "index_start": 0,
+                    "columns": []
+                },
+                "Download list": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"]
+                },
+                "P5 parameters": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["CRF / PCN", "Version", "PfizerNR", "IsDownloadbaar", "IsDeleted?", "Description (EN)", "Description (Supplier)", "Description (NL)", "DB12 address", "symbolic", "DB12 Type", "PLC Data Type", "Readback DB", "Readback Address", "Symbolic", "Readback Type", "PLC Data Type.1", "Downloadtag", "Readbacktag", "StatusTag", "Tag name", "UL/DL Tag name ", "Component Type", "VU", "Class", "Group", "Seq", "DataOwner", "Auth original value", "Auth actual value", "Unit", "Range Min", "Range Max", "Initial values", "VQS reference", "Special remarks", "Pass / Fail"]
+                },
+                "StatusTags": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["Version", "PfizerNR", "Description (Optional)", "DB16 address", "symbolic", "DB16 Name"]
+                },
+                "RMS generation settings": {
+                    "header_row": 4,
+                    "index_start": 5,
+                    "columns": ["Description", "Value", "comment"]
+                },
+                "ComponentTypes": {
+                    "header_row": 1,
+                    "index_start": 2,
+                    "columns": ["Component", "Mnemonic", "Uniek", "Basis", "Override", "Sequence"]
+                },
+                "Template history": {
+                    "header_row": 3,
+                    "index_start": 4,
+                    "columns": ["Version", "Initiator", "Date", "Description"]
+                }
+            },
+            "profiles": {
+                "supplier": {},
+                "developer": {},
+                "operator": {},
+                "admin": "ALL"
+            }
+        }
+    }
+}

@@ -32,7 +32,15 @@ class ExcelTableView(QWidget):
 
         # Dropdown menu for profile selection.
         self.profile_dropdown = QComboBox(self)
-        self.profile_dropdown.addItems(list(self.processor.profiles.keys()))
+        
+        # self.profile_dropdown.addItems(list(self.processor.profiles.keys()))
+        # Verzamel unieke profielen uit de config
+        unique_profiles = set()
+        for profiles in self.processor.profiles.values():
+            unique_profiles.update(profiles.keys())  # Verzamel unieke profielen uit alle bestanden
+
+        self.profile_dropdown.addItems(list(unique_profiles))
+
         self.profile_dropdown.currentTextChanged.connect(self.update_profile)
         controls_layout.addWidget(QLabel("Select profile:"))
         controls_layout.addWidget(self.profile_dropdown)
@@ -58,22 +66,30 @@ class ExcelTableView(QWidget):
 
         # Show initial data in the table view.
         self.load_tableview()
+        # # Ask to browse file before opening tool.
+        # self.browse_file()
         
     def browse_file(self):
-        filepath, _ = QFileDialog.getOpenFileName(self, "Open Excel file", "", "Excel files (*.xlsx *.xls)")
-    
-        if filepath:
-            self.processor.set_filepath(filepath)
-            self.update_profile()
+        excel_path, _ = QFileDialog.getOpenFileName(self, "Open Excel file", "", "Excel files (*.xlsx *.xls *.xlsm)")
         
+        print(f"Geselecteerd bestand: {excel_path}")  # Debugging
+    
+        if excel_path:
+            self.processor.set_excel_filepath(excel_path)
+            self.update_profile()
+
     def update_profile(self):
         """ Update user profile and load correct data into table view. """
         new_profile = self.profile_dropdown.currentText()
-        # Store currently selected sheet.
-        current_sheet = self.sheet_dropdown.currentText()
         self.processor.set_profile(new_profile)
+        
+        # Store previous selected sheet.
+        previous_sheet = self.sheet_dropdown.currentText()
         # Update sheet dropdown options based on selected profile.
-        self.update_sheet_options(current_sheet)
+        self.update_sheet_options(previous_sheet)
+        
+        # Refresh the table view with the new profile's rights.
+        self.update_sheet()
         
     def update_sheet_options(self, previous_sheet=None):
         """ Update the available sheet options in dropdown list according to current profile and try to keep the previous selection. """
@@ -127,8 +143,8 @@ class ExcelProcessor:
         self.load_config(config_path)
         # Dictionary containing all data {sheetname: DataFrame}.
         self.dataframes = {}
-        self.profile = profile
-        self.filepath = None  # User always has to choose a file before tool works.
+        # self.profile = profile
+        self.excel_path = None  # User always has to choose a file before tool works.
         
     def load_config(self, config_path):
         """ Load configuration parameters from JSON file. """
@@ -136,61 +152,110 @@ class ExcelProcessor:
             config = json.load(f)
         
         self.default_profile = config["default_profile"]
-        self.headerrows = config["header_rows"]
-        self.index_start = config["index_start"]
-        self.columnnames = config["column_names"]
-        self.profiles = config["profiles"]
+        self.files = config["files"]
         
-    def set_filepath(self, filepath):
-        self.filepath = filepath
-        self.load_excel()        
+        self.headerrows = {}
+        self.index_start = {}
+        self.columnnames = {}
+        self.profiles = {}
+        
+        # Loop over all files in the config file.
+        for filename, file_config in self.files.items():
+            self.headerrows[filename] = {}
+            self.index_start[filename] = {}
+            self.columnnames[filename] = {}
+            self.profiles[filename] = {}
+            
+            for sheetname, sheet_config in file_config["sheets"].items():
+                self.headerrows[filename][sheetname] = sheet_config["header_row"]
+                self.index_start[filename][sheetname] = sheet_config["index_start"]
+                self.columnnames[filename][sheetname] = sheet_config["columns"]
+                
+            # Verwerk profielen
+            for profile, access in file_config["profiles"].items():
+                if access == "ALL":
+                    # Als 'ALL', dan krijgt dit profiel toegang tot alle kolommen van alle sheets
+                    self.profiles[filename][profile] = {
+                        sheet: sheet_config["columns"] for sheet, sheet_config in file_config["sheets"].items()
+                    }
+                else:
+                    self.profiles[filename][profile] = access
     
     def get_config_sheets(self):
         """ Return list of available sheets for current profile. """
-        available_sheets = []
-        for sheet in self.headerrows.keys():
-            if sheet in self.profiles[self.profile]:
-                available_sheets.append(sheet)
-        return available_sheets
+        if not self.excel_path:
+            return []
+        
+        filename = os.path.basename(self.excel_path)
+        if filename not in self.files:
+            return []
+        
+        if self.profile not in self.profiles[filename]:
+            return []
+        
+        if self.profiles[filename][self.profile] == "ALL":
+            return list(self.headerrows[filename].keys())  # Admin kan alle sheets zien
+        
+        # available_sheets = []
+        
+        # for sheet in self.headerrows.keys():
+        #     if sheet in self.profiles[self.profile]:
+        #         available_sheets.append(sheet)
+        # return available_sheets
+        return list(self.profiles[filename][self.profile].keys())
         
     def set_profile(self, profile):
-        """ Set active profile (OR default profile). """
-        if profile not in self.profiles:
-            self.profile = self.default_profile
-        else:
-            self.profile = profile
+        # """ Set active profile (OR default profile). """
+        # if profile not in self.profiles:
+        #     self.profile = self.default_profile
+        # else:
+        #     self.profile = profile
+        """ Set the active profile for data access. """
+        self.profile = profile
                 
     def load_excel(self):
         """ Load the Excel sheets into dataframes, with the specified header row per sheet and columns allowed depending on the indicated profile. """
         # Don't try to load an Excel file when the file has not been selected yet.
-        if not self.filepath:
+        if not self.excel_path:
             return
         
-        # Open the Excel-file.
-        xls = pd.ExcelFile(self.filepath)
+        filename = os.path.basename(self.excel_path)
         
-        for sheet, header_row in self.headerrows.items():
-            if sheet in xls.sheet_names:
-                df = pd.read_excel(self.filepath, sheet_name=sheet, header=header_row-1)
-                
-                # Only use profile-assigned columns.
-                allowed_columns = self.profiles[self.profile][sheet]
-                valid_columns = [col for col in allowed_columns if col in df.columns]
-                df = df[valid_columns]
+            if filename not in self.files:
+                print(f"Warning: {filename} is not in the config.")
+            
+            # Open the Excel-file.
+            xls = pd.ExcelFile(self.excel_path)
+            
+            for sheet, sheet_config in self.files[filename]["sheets"].items():
+                if sheet in xls.sheet_names:
+                    header_row = self.headerrows[filename][sheet]
+                    df = pd.read_excel(self.excel_path, sheet_name=sheet, header=header_row-1)
                     
-                if sheet in self.index_start:
-                    # Delete excess rows that are right below the header row(s).
-                    if (self.index_start[sheet] - self.headerrows[sheet] - 2) >= 0:
-                        # We have to delete the first x rows in the dataframe.
-                        # -2+1 because else range(0,0), then we get an empty list (row 0 doesn't get dropped from the dataframe)
-                        df = df.drop([i for i in range(self.index_start[sheet]-self.headerrows[sheet]-1)])
+                    # Only use profile-assigned columns.
+                    # Controleer of het profiel 'ALL' mag zien (alle kolommen, dus admin profiel).
+                    if self.profiles[self.profile] == "ALL":
+                        valid_columns = df.columns.tolist()  # Neem alle kolommen, dus niet nodig om alle kolommen in config te zetten dan?
+                    else:
+                        # allowed_columns = self.profiles[self.profile][sheet]
+                        allowed_columns = self.profiles[filename][self.profile].get(sheet, [])
+                        valid_columns = [col for col in allowed_columns if col in df.columns]
                     
-                    # Adjust indices to match Excel row indeces.
-                    df.index = range(self.index_start[sheet], self.index_start[sheet] + len(df))                                 
-                    
-                self.dataframes[sheet] = df
-            else:
-                print(f"Warning: {sheet} not found in {self.filepath}.")
+                    df = df[valid_columns]
+                        
+                    if sheet in self.index_start[filename]:
+                        index_start = self.index_start[filename][sheet]
+                        # Delete excess rows that are right below the header row(s).
+                        if (index_start - header_row - 2) >= 0:
+                            # We have to delete the first x rows in the dataframe.
+                            # -2+1 because else range(0,0), then we get an empty list (row 0 doesn't get dropped from the dataframe)
+                            df = df.drop([i for i in range(index_start-header_row-1)])
+                        
+                        # Adjust indices to match Excel row indeces.
+                        df.index = range(index_start, index_start + len(df))                                 
+                        
+                    self.dataframes[sheet] = df
+                else:
         
     def get_dataframe(self, sheetname):
         """ Get a specific sheet (DataFrame). """
@@ -199,7 +264,7 @@ class ExcelProcessor:
 
 
 if __name__ == "__main__":
-    config_file = "config.json"
+    config_file = "new_config_V2.json"
     current_profile = "operator"  # Will later be set through GUI dropdown list.
     processor = ExcelProcessor(config_file, profile=current_profile)
     
