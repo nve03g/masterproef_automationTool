@@ -2,8 +2,7 @@ import sys
 import json
 import warnings
 import pandas as pd
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QPushButton, QTableView, QFileDialog, QFrame, QLabel, QScrollArea
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QPushButton, QTableView, QFileDialog, QLabel
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 # REMARK: last data row isn't correctly calculated
