@@ -16,3 +16,15 @@ KeyError: 'admin'
 
 
 
+2025-04-01 13:20:06,355 - ERROR - Error loading Excel file: /Users/nellie/Documenten/Python_programs/masterproef/combined/AlarmList_CU7000_B5_FREEZE.xlsx
+Traceback (most recent call last):
+  File "/Users/nellie/Documenten/Python_programs/masterproef/combined/tool.py", line 259, in load_excel
+    if self.profiles[self.profile] == "ALL":
+       ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'operator'
+2025-04-01 13:21:55,685 - ERROR - Error loading Excel file: /Users/nellie/Documenten/Python_programs/masterproef/combined/AlarmList_CU7000_B5_FREEZE.xlsx
+Traceback (most recent call last):
+  File "/Users/nellie/Documenten/Python_programs/masterproef/combined/tool.py", line 259, in load_excel
+    if self.profiles[self.profile] == "ALL":
+       ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'operator'

@@ -10,6 +10,7 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 # REMARK: last data row isn't correctly calculated
 
 # Log errors in logfile
+
 logging.basicConfig(
     filename="error_log.txt",
     level=logging.ERROR,
@@ -121,7 +122,7 @@ class ExcelTableView(QWidget):
         # Automatically load the selected sheet.
         self.update_sheet()
         
-    def update_sheet(self, event=None):
+    def update_sheet(self):
         """ Update the table view with data from selected sheet. """
         sheet_name = self.sheet_dropdown.currentText()
         self.load_tableview(sheet_name)
