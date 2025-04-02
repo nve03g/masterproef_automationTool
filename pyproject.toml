@@ -1,0 +1,20 @@
+[project]
+name = "masterproef"
+version = "0.1.0"
+description = "Tool for validation and correction of Excel-data for SCADA-cqconfiguration."
+authors = [
+    {name = "Nellie Van Eeckhaute",email = "nve03g@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas (>=2.2.3,<3.0.0)",
+    "pyqt5 (>=5.15.11,<6.0.0)",
+    "openpyxl (>=3.1.5,<4.0.0)",
+    "xlwings (>=0.33.11,<0.34.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
